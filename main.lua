@@ -44,6 +44,7 @@ function love.load()
     -- TODO: Load graphics
 
     gamestate = 'menu'
+    background = love.graphics.newImage('graphics/airbg.png')
 
     -- initialize our virtual resolution, which will be rendered within our
     -- actual window no matter its dimensions
@@ -94,7 +95,13 @@ end
 function love.draw()
 
     if gamestate == 'menu' then
-		love.graphics.newImage('./graphics/pixelbg.png')
+        love.graphics.draw(background)
+
+        -- for i = 0, love.graphics.getWidth() / background:getWidth() do
+        --    for j = 0, love.graphics.getHeight() / background:getHeight() do
+        --        love.graphics.draw(background, i * background:getWidth(), j * background:getHeight())
+        --    end
+        -- end
 		menu_draw()
     end
     
