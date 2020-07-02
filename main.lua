@@ -1,4 +1,20 @@
-require 'src/Dependencies'
+require './src/Dependencies'
+-- push is a library that will allow us to draw our game at a virtual
+-- resolution, instead of however large our window is; used to provide
+-- a more retro aesthetic
+--
+-- https://github.com/Ulydev/push
+push = require'lib/push'
+
+-- the "Class" library we're using will allow us to represent anything in
+-- our game as code, rather than keeping track of many disparate variables and
+-- methods
+--
+-- https://github.com/vrld/hump/blob/master/class.lua
+Class = require'lib/class'
+
+require './src/states/menu'
+require './src/states/info'
 
 -- size of our actual window
 WINDOW_WIDTH = 1280
@@ -32,7 +48,9 @@ function love.load()
     math.randomseed(os.time())
 
     -- TODO: Load sounds
-    gFonts = {}
+    gSounds = {
+        ['synne'] = love.audio.newSource("sounds/Wergelandsveien73.wav", "static"),
+    }
 
     -- TODO: Load graphics
     gGraphics = {
@@ -47,16 +65,23 @@ function love.load()
         ['player'] = GeneratePlayerQuads(gGraphics['player'])
     }
 
-    -- TODO: Load sounds
-    gSounds = {}
-
-    gStateMachine = StateMachine {
-        ['play'] = function() return PlayState() end
+    gFonts = {
+        ['bigfont'] = love.graphics.newFont('fonts/m3x6.ttf',50),
+        ['smallfont'] = love.graphics.newFont('fonts/m3x6.ttf',20),
     }
 
-    gStateMachine:change('play', {
-        player = Player()
-    })
+    -- TODO: Load sounds
+
+    gamestate = 'menu'
+
+
+    gStateMachine = StateMachine {
+        ['play'] = function() return PlayState() end,
+        ['menu'] = function() return MenuState() end,
+        ['info'] = function() return InfoState() end,
+    }
+
+    gStateMachine:change('menu', {})
 
     -- initialize our virtual resolution, which will be rendered within our
     -- actual window no matter its dimensions
@@ -81,6 +106,7 @@ end
 function love.resize(w, h)
     push:resize(w, h)
 end
+
 
 function love.update(dt)
     gStateMachine:update(dt)
@@ -114,11 +140,32 @@ function love.keyboard.wasPressed(key)
     end
 end
 
+function love.keypressed(key)
+    if key == 'return' then
+    gStateMachine:change('info', {})
+    end
+
+    if key == 'escape' then
+    gStateMachine:change('menu', {})
+    end
+
+    if key == 'p' then
+        gStateMachine:change('play', {
+            player = Player()
+        })
+    end
+    
+end
+
+
 --[[
     Called each frame after update; is responsible simply for
     drawing all of our game objects and more to the screen.
 ]]
 function love.draw()
+    love.graphics.setFont( gFonts['smallfont'] )
+    local x, y = love.mouse.getPosition()
+
     -- begin drawing with push, in our virtual resolution
     push:start()
 
@@ -129,7 +176,6 @@ function love.draw()
     gStateMachine:render()
 
     -- display FPS for debugging; simply comment out to remove
-    displayFPS()
 
     push:finish()
 end
@@ -137,8 +183,3 @@ end
 --[[
     Renders the current FPS.
 ]]
-function displayFPS()
-    -- simple FPS display across all states
-    love.graphics.setColor(0, 255, 0, 255)
-    love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 5, 5)
-end

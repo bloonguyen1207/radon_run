@@ -17,3 +17,5 @@ end
 function PlayState:render()
     self.player:render()
 end
+
+
