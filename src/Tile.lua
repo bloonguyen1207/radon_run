@@ -15,7 +15,7 @@ function Tile:init(x, dyFromGround)
     self.x = x
 
     local dy = dyFromGround or 0
-    self.y = VIRTUAL_HEIGHT - GROUND_HEIGHT - self.height - dy
+    self.y = VIRTUAL_HEIGHT - gGraphics['ground']:getHeight() - self.height - dy
 end
 
 function Tile:render()

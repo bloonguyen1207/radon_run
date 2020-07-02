@@ -15,7 +15,7 @@ function Ghost:init(img, x, dyFromGround, rotation)
     self.x = x
 
     local dy = dyFromGround or 0
-    self.y = VIRTUAL_HEIGHT - GROUND_HEIGHT - self.height - dy - ghostFloatHeight
+    self.y = VIRTUAL_HEIGHT - gGraphics['ground']:getHeight() - self.height - dy - ghostFloatHeight
     self.rotation = rotation or 1
     self.isVisible = false
 end

@@ -27,8 +27,6 @@ VIRTUAL_HEIGHT = 243
 -- Game title and shit
 GAME_TITLE = 'Radon Run'
 
-GROUND_HEIGHT = 48
-
 local backgroundScroll = 0
 local groundScroll = 0
 
