@@ -5,10 +5,13 @@ function menu_load()
 end
 
 function MenuState:enter()
+    music = gSounds['background']
+    music:setVolume(0.5)
 
 end
 
 function MenuState:render()
+    music:play()
     love.graphics.setFont( gFonts['bigfont'] )
     love.graphics.setColor( 0,0,0)
     love.graphics.print('MAIN MENU', 30, 20)

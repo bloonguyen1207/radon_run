@@ -51,7 +51,10 @@ function love.load()
 
     -- TODO: Load sounds
     gSounds = {
-        ['synne'] = love.audio.newSource("sounds/Wergelandsveien73.wav", "static"),
+        ['synne1'] = love.audio.newSource("sounds/Wergelandsveien7.wav", "static"),
+        ['synne2'] = love.audio.newSource("sounds/Wergelandsveien73.wav", "static"),
+        ['background'] = love.audio.newSource("sounds/hurryup.wav", "stream"),
+        ['monitorPickup'] = love.audio.newSource("sounds/Pickup_Coin.wav", "static"),
         ['jump'] = love.audio.newSource("sounds/jump.wav"),
     }
 
@@ -62,6 +65,7 @@ function love.load()
         ['furni1'] = love.graphics.newImage('graphics/furni1.png'),
         ['radon1'] = love.graphics.newImage('graphics/Radon1.png'),
         ['monitor'] = love.graphics.newImage('graphics/airthings.png'),
+        ['ghostie'] = love.graphics.newImage('graphics/Radon1.png'),
         ['obstacles'] = {
             ['bookcase'] = love.graphics.newImage('graphics/furni2.png'),
             ['longTable'] = love.graphics.newImage('graphics/furni5.png'),

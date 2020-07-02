@@ -6,6 +6,9 @@
 
 Monitor = Class{}
 
+local count = 0
+
+
 function Monitor:init(img, x, y)
     self.image = img
     self.width = img:getWidth()
@@ -13,6 +16,9 @@ function Monitor:init(img, x, y)
     self.x = x
     self.y = y
     self.isVisible = true
+
+    soundeffect = gSounds['monitorPickup']
+    soundeffect:setVolume(0.5)
 end
 
 function Monitor:collides(target)
@@ -21,6 +27,10 @@ function Monitor:collides(target)
     self.y < target.y + target.height and
     target.y < self.y + self.height then
         self.isVisible = false
+        if count < 1 then
+        soundeffect:play()
+        count = count + 1
+        end
     end
 end
 
