@@ -15,7 +15,6 @@ Class = require'lib/class'
 
 require './src/states/menu'
 require './src/states/info'
-require './src/states/characters'
 
 -- size of our actual window
 WINDOW_WIDTH = 1280
@@ -57,7 +56,8 @@ function love.load()
 
     gamestate = 'menu'
     background = love.graphics.newImage('graphics/airbg.png')
-    font = love.graphics.newFont('fonts/m3x6.ttf',200)
+    bigfont = love.graphics.newFont('fonts/m3x6.ttf',200)
+    smallfont = love.graphics.newFont('fonts/m3x6.ttf',100)
 
     -- initialize our virtual resolution, which will be rendered within our
     -- actual window no matter its dimensions
@@ -94,7 +94,7 @@ function love.keypressed(key)
     elseif gamestate == 'info' then
     
         if key == 'return' then
-            gamestate = 'characters'
+            gamestate = 'gameplay'
         end
     end
     
@@ -106,29 +106,17 @@ end
     drawing all of our game objects and more to the screen.
 ]]
 function love.draw()
-    love.graphics.setFont( font )
+    love.graphics.setFont( bigfont )
+    local x, y = love.mouse.getPosition()
 
     if gamestate == 'menu' then
         love.graphics.draw(background)
-
-        -- for i = 0, love.graphics.getWidth() / background:getWidth() do
-        --    for j = 0, love.graphics.getHeight() / background:getHeight() do
-        --        love.graphics.draw(background, i * background:getWidth(), j * background:getHeight())
-        --    end
-        -- end
 		menu_draw()
     end
     
     if gamestate == 'info' then
-        love.graphics.setBackgroundColor(1, 0, 0)
 
         info_draw()
-    end
-
-    if gamestate == 'characters' then
-        love.graphics.setBackgroundColor(0, 1, 0)
-
-        characters_draw()
     end
 
 end
