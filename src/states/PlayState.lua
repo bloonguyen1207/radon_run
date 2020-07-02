@@ -10,6 +10,7 @@ function PlayState:enter(params)
     self.player = params.player
     self.monitor = params.monitor
     self.obstacles = params.obstacles
+    self.tiles = params.tiles
 end
 
 function PlayState:update(dt)
@@ -27,6 +28,11 @@ function PlayState:render()
     for _, obstacle in pairs(self.obstacles) do
         obstacle:render()
     end
+    for _, tile in pairs(self.tiles) do
+        tile:render()
+    end
+
+    self.player:render()
 end
 
 
