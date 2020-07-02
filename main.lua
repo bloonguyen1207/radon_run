@@ -11,6 +11,14 @@ VIRTUAL_HEIGHT = 243
 -- Game title and shit
 GAME_TITLE = 'AT Game'
 
+local backgroundScroll = 0
+local groundScroll = 0
+
+local BACKGROUND_SCROLL_SPEED = 30
+local GROUND_SCROLL_SPEED = 60
+
+local BACKGROUND_LOOPING_POINT = 50
+
 function love.load()
     -- set love's default filter to "nearest-neighbor", which essentially
     -- means there will be no filtering of pixels (blurriness), which is
@@ -28,6 +36,8 @@ function love.load()
 
     -- TODO: Load graphics
     gGraphics = {
+        ['background'] = love.graphics.newImage('graphics/layer-1.png'),
+        ['ground'] = love.graphics.newImage('graphics/layer-2.png'),
         ['player'] = love.graphics.newImage('graphics/player.png')
     }
 
@@ -38,6 +48,14 @@ function love.load()
     -- TODO: Load sounds
     gSounds = {}
 
+    gStateMachine = StateMachine {
+        ['play'] = function() return PlayState() end
+    }
+
+    gStateMachine:change('play', {
+        player = Player()
+    })
+
     -- initialize our virtual resolution, which will be rendered within our
     -- actual window no matter its dimensions
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
@@ -47,8 +65,23 @@ function love.load()
     })
 end
 
+--[[
+    Called whenever we change the dimensions of our window, as by dragging
+    out its bottom corner, for example. In this case, we only need to worry
+    about calling out to `push` to handle the resizing. Takes in a `w` and
+    `h` variable representing width and height, respectively.
+]]
+function love.resize(w, h)
+    push:resize(w, h)
+end
+
 function love.update(dt)
     -- Game loop
+    -- scroll our background and ground, looping back to 0 after a certain amount
+    backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt) % BACKGROUND_LOOPING_POINT
+    groundScroll = (groundScroll + GROUND_SCROLL_SPEED * dt) % VIRTUAL_WIDTH
+
+    gStateMachine:update(dt)
 end
 
 --[[
@@ -58,7 +91,8 @@ end
     things to happen right away, just once, like when we want to quit.
 ]]
 function love.keypressed(key)
-
+    -- add to our table of keys pressed this frame
+    love.keyboard.keysPressed[key] = true
 end
 
 --[[
@@ -66,5 +100,44 @@ end
     drawing all of our game objects and more to the screen.
 ]]
 function love.draw()
+    -- begin drawing with push, in our virtual resolution
+    push:start()
 
+    -- background should be drawn regardless of state, scaled to fit our
+    -- virtual resolution
+    local backgroundWidth = gGraphics['background']:getWidth()
+    local backgroundHeight = gGraphics['background']:getHeight()
+
+    love.graphics.draw(gGraphics['background'],
+    -- draw at coordinates 0, 0
+            0, 0,
+    -- no rotation
+            0,
+    -- scale factors on X and Y axis so it fills the screen
+            VIRTUAL_WIDTH / (backgroundWidth - 1), VIRTUAL_HEIGHT / (backgroundHeight - 1))
+
+    love.graphics.draw(gGraphics['ground'],
+    -- draw at coordinates 0, 0
+            0, 0,
+    -- no rotation
+            0,
+    -- scale factors on X and Y axis so it fills the screen
+            VIRTUAL_WIDTH / (backgroundWidth - 1), VIRTUAL_HEIGHT / (backgroundHeight - 1))
+
+    -- use the state machine to defer rendering to the current state we're in
+    gStateMachine:render()
+
+    -- display FPS for debugging; simply comment out to remove
+    displayFPS()
+
+    push:finish()
+end
+
+--[[
+    Renders the current FPS.
+]]
+function displayFPS()
+    -- simple FPS display across all states
+    love.graphics.setColor(0, 255, 0, 255)
+    love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 5, 5)
 end
