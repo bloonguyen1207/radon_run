@@ -58,7 +58,6 @@ function love.load()
     gGraphics = {
         ['background'] = love.graphics.newImage('graphics/background.png'),
         ['ground'] = love.graphics.newImage('graphics/ground.png'),
-        ['player'] = love.graphics.newImage('graphics/player.png'),
         ['furni1'] = love.graphics.newImage('graphics/furni1.png'),
         ['radon1'] = love.graphics.newImage('graphics/Radon1.png'),
         ['obstacles'] = {
@@ -69,10 +68,12 @@ function love.load()
             ['mirror'] = love.graphics.newImage('graphics/furni8.png'),
         },
         ['tile'] = love.graphics.newImage('graphics/tile.png'),
-    }
-
-    gFrames = {
-        ['player'] = GeneratePlayerQuads(gGraphics['player'])
+        ['player'] = {
+            ['left'] = love.graphics.newImage('graphics/player/hero2.png'),
+            ['right'] = love.graphics.newImage('graphics/player/hero1.png'),
+            ['radon_left'] = love.graphics.newImage('graphics/player/hero_radon2.png'),
+            ['radon_right'] = love.graphics.newImage('graphics/player/hero_radon1.png'),
+        },
     }
 
     gFonts = {
