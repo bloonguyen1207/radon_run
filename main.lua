@@ -62,15 +62,11 @@ function love.load()
         ['furni1'] = love.graphics.newImage('graphics/furni1.png'),
         ['radon1'] = love.graphics.newImage('graphics/Radon1.png'),
         ['obstacles'] = {
-            ['chest'] = love.graphics.newImage('graphics/furni1.png'),
             ['bookcase'] = love.graphics.newImage('graphics/furni2.png'),
-            ['drawer'] = love.graphics.newImage('graphics/furni3.png'),
-            ['shortTable'] = love.graphics.newImage('graphics/furni4.png'),
             ['longTable'] = love.graphics.newImage('graphics/furni5.png'),
             ['diningTable'] = love.graphics.newImage('graphics/furni6.png'),
             ['lamp'] = love.graphics.newImage('graphics/furni7.png'),
             ['mirror'] = love.graphics.newImage('graphics/furni8.png'),
-            ['glassTable'] = love.graphics.newImage('graphics/furni9.png'), 
         },
     }
 
@@ -97,17 +93,12 @@ function love.load()
     gStateMachine:change('menu', {})
     
     -- Create obstacles
-    local x = 40
     Obstacles = {
-        Obstacle(gGraphics['obstacles']['chest'], x),
-        Obstacle(gGraphics['obstacles']['bookcase'], x+25),
-        Obstacle(gGraphics['obstacles']['drawer'], x+40),
-        Obstacle(gGraphics['obstacles']['shortTable'], x+65),
-        Obstacle(gGraphics['obstacles']['longTable'], x+70),
-        Obstacle(gGraphics['obstacles']['diningTable'], x+85),
-        Obstacle(gGraphics['obstacles']['lamp'], x+90),
-        Obstacle(gGraphics['obstacles']['mirror'], x+105),
-        Obstacle(gGraphics['obstacles']['glassTable'], x+1050),
+        Obstacle(gGraphics['obstacles']['lamp'], VIRTUAL_WIDTH/15 + 3, 15),
+        Obstacle(gGraphics['obstacles']['longTable'], VIRTUAL_WIDTH/15),
+        Obstacle(gGraphics['obstacles']['mirror'], VIRTUAL_WIDTH/4, 16),
+        Obstacle(gGraphics['obstacles']['bookcase'], VIRTUAL_WIDTH/2),
+        Obstacle(gGraphics['obstacles']['diningTable'], VIRTUAL_WIDTH * 3/4),
     }
 
     gStateMachine:change('play', {

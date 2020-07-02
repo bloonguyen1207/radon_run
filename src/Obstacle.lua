@@ -6,14 +6,14 @@
 
 Obstacle = Class{}
 
-local obstacleScaleFactor = 0.5
-
-function Obstacle:init(img, x)
+function Obstacle:init(img, x, dyFromGround)
     self.image = img
     self.width = img:getWidth()
-    self.height = img:getHeight() * obstacleScaleFactor
+    self.height = img:getHeight()
     self.x = x
-    self.isVisible = true
+
+    local dy = dyFromGround or 0
+    self.y = VIRTUAL_HEIGHT - GROUND_HEIGHT - self.height - dy
 end
 
 function Obstacle:update(dt)
@@ -21,5 +21,5 @@ function Obstacle:update(dt)
 end
 
 function Obstacle:render()
-    love.graphics.draw(self.image, self.x, VIRTUAL_HEIGHT - GROUND_HEIGHT - self.height, 0, obstacleScaleFactor, obstacleScaleFactor)
+    love.graphics.draw(self.image, self.x, self.y)
 end
