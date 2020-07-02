@@ -58,7 +58,6 @@ function love.load()
     gGraphics = {
         ['background'] = love.graphics.newImage('graphics/background.png'),
         ['ground'] = love.graphics.newImage('graphics/ground.png'),
-        ['player'] = love.graphics.newImage('graphics/player.png'),
         ['furni1'] = love.graphics.newImage('graphics/furni1.png'),
         ['radon1'] = love.graphics.newImage('graphics/Radon1.png'),
         ['obstacles'] = {
@@ -68,10 +67,6 @@ function love.load()
             ['lamp'] = love.graphics.newImage('graphics/furni7.png'),
             ['mirror'] = love.graphics.newImage('graphics/furni8.png'),
         },
-    }
-
-    gFrames = {
-        ['player'] = GeneratePlayerQuads(gGraphics['player'])
     }
 
     gFonts = {

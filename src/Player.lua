@@ -78,7 +78,7 @@ function Player:update(dt)
         self.dy = 0
     end
 
-    if self.dy > 0 then
+    if self.dy < 0 then
         self.y = math.max(0, self.y + self.dy * dt)
     else
         self.y = math.min(VIRTUAL_HEIGHT - gGraphics['ground']:getHeight() - self.height, self.y + self.dy * dt)
