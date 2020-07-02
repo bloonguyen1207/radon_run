@@ -54,7 +54,7 @@ function love.load()
         ['synne1'] = love.audio.newSource("sounds/Wergelandsveien7.wav", "static"),
         ['synne2'] = love.audio.newSource("sounds/Wergelandsveien73.wav", "static"),
         ['background'] = love.audio.newSource("sounds/hurryup.wav", "stream"),
-        ['monitorPickup'] = love.audio.newSource("sounds/Pickup_Coin.wav", "static")
+        ['monitorPickup'] = love.audio.newSource("sounds/Pickup_Coin.wav", "static"),
         ['jump'] = love.audio.newSource("sounds/jump.wav"),
     }
 
