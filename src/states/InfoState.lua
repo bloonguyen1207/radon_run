@@ -1,20 +1,14 @@
 InfoState = Class{__include = BaseState}
 
-
-function info_load()
-    
-
-end
-
 function InfoState:enter() end
 
 function InfoState:render()
     src1 = gSounds['synne1']
     src2 = gSounds['synne2']
-    love.graphics.draw(gGraphics['ghosts']['bob'], 170, 27)
+    love.graphics.draw(gGraphics['ghosts']['bob'], 150, 27)
     love.graphics.setColor(0,0,0)
     love.graphics.setFont( gFonts['bigfont'] )
-    love.graphics.print('GAME OVER', 30, 10)
+    love.graphics.print('The end', 30, 10)
     
     love.graphics.setFont( gFonts['smallfont'] )
     love.graphics.print('Radon does not show any short term effects,', 30, 50)
@@ -31,17 +25,9 @@ function InfoState:render()
     src1:play()
 end
 
-
-
 function InfoState:update(dt)
-    if love.keyboard.wasPressed('p') or love.keyboard.wasPressed('return') then
-        gStateMachine:change('play', {
-            player = self.player,
-            obstacles = self.obstacles,
-            monitor = self.monitor,
-            tiles = self.tiles,
-            ghosts = self.ghosts,
-        })
+    if love.keyboard.wasPressed('return') then
+        gStateMachine:change('menu', {})
     end
 end
 

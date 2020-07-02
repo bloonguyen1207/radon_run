@@ -16,10 +16,9 @@ function Player:init()
     self.dy = 0
     self.dx = 0
 
-    self.hp = 100
-    self.speed = 200
+    self.speed = 100
 
-    self.jumpSpeed = 400
+    self.jumpSpeed = 300
 
     self.skin = 0
     self.acquiredMonitor = false
