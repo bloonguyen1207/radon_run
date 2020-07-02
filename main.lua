@@ -67,6 +67,12 @@ function love.load()
             ['lamp'] = love.graphics.newImage('graphics/furni7.png'),
             ['mirror'] = love.graphics.newImage('graphics/furni8.png'),
         },
+        ['player'] = {
+            ['left'] = love.graphics.newImage('graphics/player/hero2.png'),
+            ['right'] = love.graphics.newImage('graphics/player/hero1.png'),
+            ['radon_left'] = love.graphics.newImage('graphics/player/hero_radon2.png'),
+            ['radon_right'] = love.graphics.newImage('graphics/player/hero_radon1.png'),
+        }
     }
 
     gFonts = {

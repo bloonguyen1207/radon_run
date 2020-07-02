@@ -16,10 +16,11 @@ function PlayState:update(dt)
 end
 
 function PlayState:render()
-    self.player:render()
     for _, obstacle in pairs(self.obstacles) do
         obstacle:render()
     end
+
+    self.player:render()
 end
 
 

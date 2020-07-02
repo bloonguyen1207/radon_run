@@ -13,8 +13,8 @@ local numFrames = 12
 local xOffset
 
 function Player:init(skin)
-    self.width = 16
-    self.height = 32
+    self.width = gGraphics['player']['left']:getWidth()
+    self.height = gGraphics['player']['left']:getHeight()
 
     self.x = 50
     self.y = VIRTUAL_HEIGHT - gGraphics['ground']:getHeight() - self.height
@@ -27,6 +27,7 @@ function Player:init(skin)
     self.jumpSpeed = 500
 
     self.skin = 0
+    self.acquiredMonitor = false
 end
 
 function Player:collides(target)
@@ -86,6 +87,13 @@ function Player:update(dt)
 end
 
 function Player:render()
-    love.graphics.setColor(50, 113, 168)
-    love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
+    playerHeight = gGraphics['player']['left']:getHeight()
+    playerWidth = gGraphics['player']['left']:getWidth()
+    playerRadonHeight = gGraphics['player']['left']:getHeight()
+    playerRadonWidth = gGraphics['player']['left']:getWidth()
+    if self.dx < 0 then
+        love.graphics.draw(gGraphics['player']['left'], self.x, self.y)
+    else
+        love.graphics.draw(gGraphics['player']['right'], self.x, self.y)
+    end
 end
