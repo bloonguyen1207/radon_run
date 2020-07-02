@@ -67,12 +67,13 @@ function love.load()
             ['lamp'] = love.graphics.newImage('graphics/furni7.png'),
             ['mirror'] = love.graphics.newImage('graphics/furni8.png'),
         },
+        ['tile'] = love.graphics.newImage('graphics/tile.png'),
         ['player'] = {
             ['left'] = love.graphics.newImage('graphics/player/hero2.png'),
             ['right'] = love.graphics.newImage('graphics/player/hero1.png'),
             ['radon_left'] = love.graphics.newImage('graphics/player/hero_radon2.png'),
             ['radon_right'] = love.graphics.newImage('graphics/player/hero_radon1.png'),
-        }
+        },
     }
 
     gFonts = {
@@ -95,16 +96,25 @@ function love.load()
     
     -- Create obstacles
     Obstacles = {
-        Obstacle(gGraphics['obstacles']['lamp'], VIRTUAL_WIDTH/15 + 3, 15),
-        Obstacle(gGraphics['obstacles']['longTable'], VIRTUAL_WIDTH/15),
-        Obstacle(gGraphics['obstacles']['mirror'], VIRTUAL_WIDTH/4, 16),
-        Obstacle(gGraphics['obstacles']['bookcase'], VIRTUAL_WIDTH/2),
-        Obstacle(gGraphics['obstacles']['diningTable'], VIRTUAL_WIDTH * 3/4),
+        Obstacle(gGraphics['obstacles']['longTable'], 28),
+        Obstacle(gGraphics['obstacles']['lamp'], 31, 15),
+        Obstacle(gGraphics['obstacles']['mirror'], 108, 16),
+        Obstacle(gGraphics['obstacles']['bookcase'], 216),
+        Obstacle(gGraphics['obstacles']['diningTable'], 324),
+    }
+
+    -- Create tiles
+    Tiles = {
+        Tile(155, 50),
+        Tile(205, 75),
+        Tile(255, 75),
+        Tile(335, 110),
     }
 
     gStateMachine:change('play', {
         player = Player(),
-        obstacles = Obstacles
+        obstacles = Obstacles,
+        tiles = Tiles,
     })
 
     -- initialize our virtual resolution, which will be rendered within our

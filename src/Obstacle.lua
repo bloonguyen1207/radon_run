@@ -16,10 +16,6 @@ function Obstacle:init(img, x, dyFromGround)
     self.y = VIRTUAL_HEIGHT - GROUND_HEIGHT - self.height - dy
 end
 
-function Obstacle:update(dt)
-
-end
-
 function Obstacle:render()
     love.graphics.draw(self.image, self.x, self.y)
 end
