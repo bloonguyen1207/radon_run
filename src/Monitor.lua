@@ -32,15 +32,12 @@ function Monitor:collides(target)
         count = count + 1
         end
     end
-    
 end
 
 function Monitor:update(dt)
-
 end
 
 function Monitor:render()
-
     if self.isVisible then
         love.graphics.draw(self.image, self.x, self.y, 0)
     end
