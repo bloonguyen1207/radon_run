@@ -14,13 +14,17 @@ local xOffset
 
 function Player:init(skin)
     self.width = 16
-    self.height = 16
+    self.height = 32
+
+    self.x = 50
+    self.y = VIRTUAL_HEIGHT - gGraphics['ground']:getHeight() - self.height
 
     self.dy = 0
     self.dx = 0
 
     self.hp = 100
     self.speed = 200
+    self.jumpSpeed = 20
 
     self.skin = 0
 end
@@ -44,29 +48,44 @@ end
 
 function Player:update(dt)
     -- keyboard input
-    if love.keyboard.isDown('a') then
+    if love.keyboard.isDown('left') then
         self.dx = -self.speed
-    elseif love.keyboard.isDown('d') then
+    elseif love.keyboard.isDown('right') then
         self.dx = self.speed
     else
         self.dx = 0
     end
 
-    animTimer = animTimer - dt
+    -- math.max here ensures that we're the greater of 0 or the player's
+    -- current calculated Y position when pressing up so that we don't
+    -- go into the negatives; the movement calculation is simply our
+    -- previously-defined paddle speed scaled by dt
+    if self.dx < 0 then
+        self.x = math.max(0, self.x + self.dx * dt)
+        -- similar to before, this time we use math.min to ensure we don't
+        -- go any farther than the bottom of the screen minus the paddle's
+        -- height (or else it will go partially below, since position is
+        -- based on its top left corner)
+    else
+        self.x = math.min(VIRTUAL_WIDTH - self.width, self.x + self.dx * dt)
+    end
 
-    if animTimer <= 0 then
-        animTimer = 1/fps
-        frame = frame + 1
+    if love.keyboard.isDown('up') then
+        self.dy = self.jumpSpeed
+    elseif self.y < VIRTUAL_HEIGHT - gGraphics['ground']:getHeight() - self.height then
+        self.dy = -self.jumpSpeed
+    else
+        self.dy = 0
+    end
 
-        if frame > numFrames then frame = 1 end
-
-        xOffset = 16 * frame
-
-        --gFrames['player']['left']:setViewPort(xOffset, 16, 16, 16)
-
+    if self.dy > 0 then
+        self.y = math.max(0, self.y - self.dy * dt)
+    else
+        self.y = math.min(VIRTUAL_HEIGHT - gGraphics['ground']:getHeight() - self.height, self.y + self.dy * dt)
     end
 end
 
 function Player:render()
-    love.graphics.rectangle("fill", 50, 200, 16, 16)
+    love.graphics.setColor(50, 113, 168)
+    love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
 end

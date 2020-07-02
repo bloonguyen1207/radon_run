@@ -25,7 +25,7 @@ VIRTUAL_WIDTH = 432
 VIRTUAL_HEIGHT = 243
 
 -- Game title and shit
-GAME_TITLE = 'AT Game'
+GAME_TITLE = 'Radon Run'
 
 local backgroundScroll = 0
 local groundScroll = 0
@@ -56,7 +56,9 @@ function love.load()
     gGraphics = {
         ['background'] = love.graphics.newImage('graphics/background.png'),
         ['ground'] = love.graphics.newImage('graphics/ground.png'),
-        ['player'] = love.graphics.newImage('graphics/player.png')
+        ['player'] = love.graphics.newImage('graphics/player.png'),
+        ['furni1'] = love.graphics.newImage('graphics/furni1.png'),
+        ['radon1'] = love.graphics.newImage('graphics/Radon1.png')
     }
 
     gFrames = {
@@ -88,6 +90,11 @@ function love.load()
         resizable = true,
         vsync = true
     })
+
+    -- a table we'll use to keep track of which keys have been pressed this
+    -- frame, to get around the fact that LÖVE's default callback won't let us
+    -- test for input from within other functions
+    love.keyboard.keysPressed = {}
 end
 
 --[[
@@ -102,12 +109,35 @@ end
 
 
 function love.update(dt)
-    -- Game loop
-    -- scroll our background and ground, looping back to 0 after a certain amount
-    backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt) % BACKGROUND_LOOPING_POINT
-    groundScroll = (groundScroll + GROUND_SCROLL_SPEED * dt) % VIRTUAL_WIDTH
-
     gStateMachine:update(dt)
+
+    -- reset keys pressed
+    love.keyboard.keysPressed = {}
+end
+
+--[[
+    A callback that processes key strokes as they happen, just the once.
+    Does not account for keys that are held down, which is handled by a
+    separate function (`love.keyboard.isDown`). Useful for when we want
+    things to happen right away, just once, like when we want to quit.
+]]
+
+function love.keypressed(key)
+    -- add to our table of keys pressed this frame
+    love.keyboard.keysPressed[key] = true
+end
+
+--[[
+    A custom function that will let us test for individual keystrokes outside
+    of the default `love.keypressed` callback, since we can't call that logic
+    elsewhere by default.
+]]
+function love.keyboard.wasPressed(key)
+    if love.keyboard.keysPressed[key] then
+        return true
+    else
+        return false
+    end
 end
 
 function love.keypressed(key)
@@ -138,11 +168,6 @@ function love.draw()
 
     -- begin drawing with push, in our virtual resolution
     push:start()
-
-    -- background should be drawn regardless of state, scaled to fit our
-    -- virtual resolution
-    local backgroundWidth = gGraphics['background']:getWidth()
-    local backgroundHeight = gGraphics['background']:getHeight()
 
     love.graphics.draw(gGraphics['background'], 0, 0)
     love.graphics.draw(gGraphics['ground'], 0, VIRTUAL_HEIGHT - 48)
