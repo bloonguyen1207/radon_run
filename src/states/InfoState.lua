@@ -18,7 +18,7 @@ function InfoState:render()
     love.graphics.print('carbon monoxide combined.', 30, 130)
 
     love.graphics.setFont( gFonts['medium'] )
-    love.graphics.print('Read more at:', 30, 170)
+    love.graphics.print('Press `Space` to read more at:', 30, 170)
     love.graphics.setFont(gFonts['big'])
     love.graphics.print('www.airthings.com', 30, 205)
 
@@ -31,6 +31,9 @@ function InfoState:update(dt)
     if love.keyboard.wasPressed('return') then
         InfoState:resetGame()
         gStateMachine:change('menu', {})
+    end
+    if love.keyboard.wasPressed('space') then
+        love.system.openURL('https://www.airthings.com/what-is-radon')
     end
 end
 
