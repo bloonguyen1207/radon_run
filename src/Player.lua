@@ -24,6 +24,7 @@ function Player:init()
 
     self.skin = 0
     self.acquiredMonitor = false
+    self.numGhostsKilled = 0
 end
 
 function Player:collides(target)

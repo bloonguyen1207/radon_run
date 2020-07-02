@@ -22,8 +22,16 @@ end
 
 function Ghost:update(isVisible)
     self.isVisible = isVisible
+    -- if update makes ghost disappear, display info page
+    if not(isVisible) then
+        gStateMachine:change('ghostInfo', {
+            image = self.image
+        })
+    end
 end
 
 function Ghost:render()
-    if self.isVisible then love.graphics.draw(self.image, self.x, self.y, 0, self.rotation, 1) end
+    if self.isVisible then
+        love.graphics.draw(self.image, self.x, self.y, 0, self.rotation, 1)
+    end
 end

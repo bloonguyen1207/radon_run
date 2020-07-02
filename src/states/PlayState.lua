@@ -27,6 +27,15 @@ function PlayState:update(dt)
             ghost:update(true)
         end
     end
+
+    for _, ghost in pairs(self.ghosts) do
+        if ghost.isVisible and self.player:collides(ghost) then
+            ghost:update(false)
+        end
+    end
+
+    self.player:update(dt)
+    self.monitor:update(dt)
 end
 
 function PlayState:render()
