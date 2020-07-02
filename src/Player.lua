@@ -24,7 +24,7 @@ function Player:init(skin)
 
     self.hp = 100
     self.speed = 200
-    self.jumpSpeed = 20
+    self.jumpSpeed = 500
 
     self.skin = 0
 end
@@ -71,15 +71,15 @@ function Player:update(dt)
     end
 
     if love.keyboard.isDown('up') then
-        self.dy = self.jumpSpeed
-    elseif self.y < VIRTUAL_HEIGHT - gGraphics['ground']:getHeight() - self.height then
         self.dy = -self.jumpSpeed
+    elseif self.y < VIRTUAL_HEIGHT - gGraphics['ground']:getHeight() - self.height then
+        self.dy = self.jumpSpeed
     else
         self.dy = 0
     end
 
     if self.dy > 0 then
-        self.y = math.max(0, self.y - self.dy * dt)
+        self.y = math.max(0, self.y + self.dy * dt)
     else
         self.y = math.min(VIRTUAL_HEIGHT - gGraphics['ground']:getHeight() - self.height, self.y + self.dy * dt)
     end
