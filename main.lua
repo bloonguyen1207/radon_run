@@ -11,6 +11,8 @@ VIRTUAL_HEIGHT = 243
 -- Game title and shit
 GAME_TITLE = 'Radon Run'
 
+GRAVITY = 7
+
 TOTAL_GHOST_COUNT = 3
 
 function love.load()
@@ -156,7 +158,6 @@ end
 ]]
 function love.draw()
     love.graphics.setFont( gFonts['smallfont'] )
-    local x, y = love.mouse.getPosition()
 
     -- begin drawing with push, in our virtual resolution
     push:start()

@@ -6,8 +6,6 @@
 
 Monitor = Class{}
 
-local count = 0
-
 function Monitor:init(x, y)
     self.width = gGraphics['monitor']:getWidth()
     self.height = gGraphics['monitor']:getHeight()

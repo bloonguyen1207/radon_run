@@ -34,6 +34,18 @@ function PlayState:update(dt)
         end
     end
 
+    for _, tile in pairs(self.tiles) do
+        if self.player:collides(tile) and self.player.y + self.player.height / 2 <= tile.y then
+            self.player.y = tile.y - self.player.height
+        end
+    end
+
+    for _, obstacle in pairs(self.obstacles) do
+        if self.player:collides(obstacle) and self.player.y + self.player.height / 2 <= obstacle.y then
+            self.player.y = obstacle.y - self.player.height
+        end
+    end
+
     self.player:update(dt)
     self.monitor:update(dt)
 end

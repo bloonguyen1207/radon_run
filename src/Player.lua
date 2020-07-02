@@ -6,7 +6,6 @@
 
 Player = Class{}
 
-
 function Player:init()
     self.width = gGraphics['player']['left']:getWidth()
     self.height = gGraphics['player']['left']:getHeight()
@@ -20,7 +19,7 @@ function Player:init()
     self.hp = 100
     self.speed = 200
 
-    self.jumpSpeed = 300
+    self.jumpSpeed = 400
 
     self.skin = 0
     self.acquiredMonitor = false
@@ -45,6 +44,16 @@ function Player:collides(target)
 end
 
 function Player:update(dt)
+    -- apply velocity to character Y
+    self.dy = self.dy + GRAVITY
+    self.y = self.y + self.dy * dt
+
+    -- if we've gone below the map limit, set DY to 0
+    if self.y > ((7 - 1) * 32.5) - self.height then
+        self.y = ((7 - 1) * 32.5) - self.height
+        self.dy = 0
+    end
+
     -- keyboard input
     if love.keyboard.isDown('left') then
         self.dx = -self.speed
@@ -54,34 +63,16 @@ function Player:update(dt)
         self.dx = 0
     end
 
-    -- math.max here ensures that we're the greater of 0 or the player's
-    -- current calculated Y position when pressing up so that we don't
-    -- go into the negatives; the movement calculation is simply our
-    -- previously-defined paddle speed scaled by dt
     if self.dx < 0 then
         self.x = math.max(0, self.x + self.dx * dt)
-        -- similar to before, this time we use math.min to ensure we don't
-        -- go any farther than the bottom of the screen minus the paddle's
-        -- height (or else it will go partially below, since position is
-        -- based on its top left corner)
     else
         self.x = math.min(VIRTUAL_WIDTH - self.width, self.x + self.dx * dt)
     end
 
-    if love.keyboard.isDown('up') then
+    if love.keyboard.isDown('up') and self.dy == 0 then
         self.dy = -self.jumpSpeed
         gSounds['jump']:setVolume(0.5)
         gSounds['jump']:play()
-    elseif self.y < VIRTUAL_HEIGHT - gGraphics['ground']:getHeight() - self.height then
-        self.dy = self.jumpSpeed
-    else
-        self.dy = 0
-    end
-
-    if self.dy < 0 then
-        self.y = math.max(0, self.y + self.dy * dt)
-    else
-        self.y = math.min(VIRTUAL_HEIGHT - gGraphics['ground']:getHeight() - self.height, self.y + self.dy * dt)
     end
 end
 
