@@ -70,9 +70,9 @@ function Player:update(dt, dy)
     end
 
     -- keyboard input
-    if love.keyboard.isDown('left') then
+    if love.keyboard.isDown('left') or love.keyboard.isDown('a') then
         self.dx = -self.speed
-    elseif love.keyboard.isDown('right') then
+    elseif love.keyboard.isDown('right') or love.keyboard.isDown('d') then
         self.dx = self.speed
     else
         self.dx = 0
@@ -84,7 +84,7 @@ function Player:update(dt, dy)
         self.x = math.min(VIRTUAL_WIDTH - self.width, self.x + self.dx * dt)
     end
 
-    if love.keyboard.isDown('up') and self.dy == 0 then
+    if (love.keyboard.isDown('up') or love.keyboard.isDown('w')) and self.dy == 0 then
         self.dy = -self.jumpSpeed
         gSounds['jump']:setVolume(0.5)
         gSounds['jump']:play()
