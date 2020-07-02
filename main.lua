@@ -27,6 +27,8 @@ VIRTUAL_HEIGHT = 243
 -- Game title and shit
 GAME_TITLE = 'Radon Run'
 
+GROUND_HEIGHT = 48
+
 local backgroundScroll = 0
 local groundScroll = 0
 
@@ -58,7 +60,18 @@ function love.load()
         ['ground'] = love.graphics.newImage('graphics/ground.png'),
         ['player'] = love.graphics.newImage('graphics/player.png'),
         ['furni1'] = love.graphics.newImage('graphics/furni1.png'),
-        ['radon1'] = love.graphics.newImage('graphics/Radon1.png')
+        ['radon1'] = love.graphics.newImage('graphics/Radon1.png'),
+        ['obstacles'] = {
+            ['chest'] = love.graphics.newImage('graphics/furni1.png'),
+            ['bookcase'] = love.graphics.newImage('graphics/furni2.png'),
+            ['drawer'] = love.graphics.newImage('graphics/furni3.png'),
+            ['shortTable'] = love.graphics.newImage('graphics/furni4.png'),
+            ['longTable'] = love.graphics.newImage('graphics/furni5.png'),
+            ['diningTable'] = love.graphics.newImage('graphics/furni6.png'),
+            ['lamp'] = love.graphics.newImage('graphics/furni7.png'),
+            ['mirror'] = love.graphics.newImage('graphics/furni8.png'),
+            ['glassTable'] = love.graphics.newImage('graphics/furni9.png'), 
+        },
     }
 
     gFrames = {
@@ -82,6 +95,25 @@ function love.load()
     }
 
     gStateMachine:change('menu', {})
+    
+    -- Create obstacles
+    local x = 40
+    Obstacles = {
+        Obstacle(gGraphics['obstacles']['chest'], x),
+        Obstacle(gGraphics['obstacles']['bookcase'], x+25),
+        Obstacle(gGraphics['obstacles']['drawer'], x+40),
+        Obstacle(gGraphics['obstacles']['shortTable'], x+65),
+        Obstacle(gGraphics['obstacles']['longTable'], x+70),
+        Obstacle(gGraphics['obstacles']['diningTable'], x+85),
+        Obstacle(gGraphics['obstacles']['lamp'], x+90),
+        Obstacle(gGraphics['obstacles']['mirror'], x+105),
+        Obstacle(gGraphics['obstacles']['glassTable'], x+1050),
+    }
+
+    gStateMachine:change('play', {
+        player = Player(),
+        obstacles = Obstacles
+    })
 
     -- initialize our virtual resolution, which will be rendered within our
     -- actual window no matter its dimensions

@@ -8,6 +8,7 @@ PlayState = Class{__include = BaseState}
 
 function PlayState:enter(params)
     self.player = params.player
+    self.obstacles = params.obstacles
 end
 
 function PlayState:update(dt)
@@ -16,6 +17,9 @@ end
 
 function PlayState:render()
     self.player:render()
+    for _, obstacle in pairs(self.obstacles) do
+        obstacle:render()
+    end
 end
 
 
