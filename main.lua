@@ -27,6 +27,8 @@ VIRTUAL_HEIGHT = 243
 -- Game title and shit
 GAME_TITLE = 'Radon Run'
 
+GROUND_HEIGHT = 48
+
 local backgroundScroll = 0
 local groundScroll = 0
 
@@ -60,6 +62,13 @@ function love.load()
         ['furni1'] = love.graphics.newImage('graphics/furni1.png'),
         ['radon1'] = love.graphics.newImage('graphics/Radon1.png'),
         ['monitor'] = love.graphics.newImage('graphics/airthings.png'),
+        ['obstacles'] = {
+            ['bookcase'] = love.graphics.newImage('graphics/furni2.png'),
+            ['longTable'] = love.graphics.newImage('graphics/furni5.png'),
+            ['diningTable'] = love.graphics.newImage('graphics/furni6.png'),
+            ['lamp'] = love.graphics.newImage('graphics/furni7.png'),
+            ['mirror'] = love.graphics.newImage('graphics/furni8.png'),
+        },
     }
 
     gFrames = {
@@ -75,7 +84,7 @@ function love.load()
 
     gamestate = 'menu'
 
-    Monitor(gGraphics['monitor'], 40)
+    
 
     gStateMachine = StateMachine {
         ['play'] = function() return PlayState() end,
@@ -84,6 +93,17 @@ function love.load()
     }
 
     gStateMachine:change('menu', {})
+    
+    -- Create obstacles
+    Obstacles = {
+        Obstacle(gGraphics['obstacles']['lamp'], VIRTUAL_WIDTH/15 + 3, 15),
+        Obstacle(gGraphics['obstacles']['longTable'], VIRTUAL_WIDTH/15),
+        Obstacle(gGraphics['obstacles']['mirror'], VIRTUAL_WIDTH/4, 16),
+        Obstacle(gGraphics['obstacles']['bookcase'], VIRTUAL_WIDTH/2),
+        Obstacle(gGraphics['obstacles']['diningTable'], VIRTUAL_WIDTH * 3/4),
+    }
+
+    monitor = Monitor(gGraphics['monitor'], VIRTUAL_WIDTH-70,50)
 
 
     -- initialize our virtual resolution, which will be rendered within our
@@ -154,7 +174,9 @@ function love.keypressed(key)
 
     if key == 'p' then
         gStateMachine:change('play', {
-            player = Player()
+            player = Player(),
+            obstacles = Obstacles,
+            monitor = monitor
         })
     end
     

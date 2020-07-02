@@ -7,29 +7,23 @@
 Monitor = Class{}
 
 
-function Monitor:init(img, x)
+function Monitor:init(img, x, y)
     self.image = img
     self.width = img:getWidth()
     self.height = img:getHeight()
     self.x = x
+    self.y = y
     self.isVisible = true
 end
 
 function Monitor:collides(target)
-    -- first, check to see if the left edge of either is farther to the right
-    -- than the right edge of the other
-    if self.x > target.x + target.width or target.x > self.x + self.width then
-        return false
+    if self.x < target.x + target.width and
+    target.x < self.x + self.width and
+    self.y < target.y + target.height and
+    target.y < self.y + self.height then
+        self.isVisible = false
     end
-
-    -- then check to see if the bottom edge of either is higher than the top
-    -- edge of the other
-    if self.y > target.y + target.height or target.y > self.y + self.height then
-        return false
-    end
-
-    -- if the above aren't true, they're overlapping
-    return true
+    
 end
 
 function Monitor:update(dt)
@@ -37,5 +31,8 @@ function Monitor:update(dt)
 end
 
 function Monitor:render()
-    love.graphics.draw(self.image, self.x, VIRTUAL_HEIGHT - GROUND_HEIGHT - self.height, 0)
+
+    if self.isVisible then
+        love.graphics.draw(self.image, self.x, self.y, 0)
+    end
 end
