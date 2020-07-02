@@ -11,17 +11,20 @@ function PlayState:enter(params)
     self.monitor = params.monitor
     self.obstacles = params.obstacles
     self.tiles = params.tiles
-
+    self.ghosts = params.ghosts
 end
 
 function PlayState:update(dt)
-
     if self.player:collides(monitor) then
         self.player.acquireMonitor = true
         self.monitor.isVisible = false
 
         self.player.width = gGraphics['player']['radon_left']:getWidth()
         self.player.height = gGraphics['player']['radon_left']:getHeight()
+
+        for _, ghost in pairs(self.ghosts) do
+            ghost:update(true)
+        end
     end
 
     self.player:update(dt)
@@ -38,10 +41,11 @@ function PlayState:render()
     for _, tile in pairs(self.tiles) do
         tile:render()
     end
+    for _, ghost in pairs(self.ghosts) do
+        ghost:render()
+    end
 
     self.player:render()
 end
 
 function PlayState:exit() end
-
-

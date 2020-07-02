@@ -27,8 +27,6 @@ VIRTUAL_HEIGHT = 243
 -- Game title and shit
 GAME_TITLE = 'Radon Run'
 
-GROUND_HEIGHT = 48
-
 local backgroundScroll = 0
 local groundScroll = 0
 
@@ -62,8 +60,6 @@ function love.load()
     gGraphics = {
         ['background'] = love.graphics.newImage('graphics/background.png'),
         ['ground'] = love.graphics.newImage('graphics/ground.png'),
-        ['furni1'] = love.graphics.newImage('graphics/furni1.png'),
-        ['radon1'] = love.graphics.newImage('graphics/Radon1.png'),
         ['monitor'] = love.graphics.newImage('graphics/airthings.png'),
         ['ghostie'] = love.graphics.newImage('graphics/Radon1.png'),
         ['obstacles'] = {
@@ -80,6 +76,11 @@ function love.load()
             ['radon_left'] = love.graphics.newImage('graphics/player/hero_radon2.png'),
             ['radon_right'] = love.graphics.newImage('graphics/player/hero_radon1.png'),
         },
+        ['ghosts'] = {
+            ['adam'] = love.graphics.newImage('graphics/Radon1.png'),
+            ['bob'] = love.graphics.newImage('graphics/Radon2.png'),
+            ['carl'] = love.graphics.newImage('graphics/Radon3.png'),
+        }
     }
 
     gFonts = {
@@ -110,6 +111,13 @@ function love.load()
         Tile(205, 75),
         Tile(255, 75),
         Tile(335, 110),
+    }
+
+    -- Create ghosts
+    Ghosts = {
+        Ghost(gGraphics['ghosts']['adam'], 80, 0),
+        Ghost(gGraphics['ghosts']['bob'], 224, 75, -1),
+        Ghost(gGraphics['ghosts']['carl'], 330, 12),
     }
 
     monitor = Monitor(gGraphics['monitor'], VIRTUAL_WIDTH-70,50)
@@ -186,6 +194,7 @@ function love.keypressed(key)
             obstacles = Obstacles,
             monitor = monitor,
             tiles = Tiles,
+            ghosts = Ghosts,
         })
     end
     
