@@ -8,15 +8,23 @@ PlayState = Class{__include = BaseState}
 
 function PlayState:enter(params)
     self.player = params.player
+    self.monitor = params.monitor
     self.obstacles = params.obstacles
     self.tiles = params.tiles
 end
 
 function PlayState:update(dt)
     self.player:update(dt)
+
+    if monitor:collides(self.player) then
+        monitor.isVisible = false
+    end
 end
 
 function PlayState:render()
+    self.player:render()
+    self.monitor:render()
+
     for _, obstacle in pairs(self.obstacles) do
         obstacle:render()
     end

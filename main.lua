@@ -60,6 +60,7 @@ function love.load()
         ['ground'] = love.graphics.newImage('graphics/ground.png'),
         ['furni1'] = love.graphics.newImage('graphics/furni1.png'),
         ['radon1'] = love.graphics.newImage('graphics/Radon1.png'),
+        ['monitor'] = love.graphics.newImage('graphics/airthings.png'),
         ['obstacles'] = {
             ['bookcase'] = love.graphics.newImage('graphics/furni2.png'),
             ['longTable'] = love.graphics.newImage('graphics/furni5.png'),
@@ -85,6 +86,7 @@ function love.load()
 
     gamestate = 'menu'
 
+    
 
     gStateMachine = StateMachine {
         ['play'] = function() return PlayState() end,
@@ -111,11 +113,9 @@ function love.load()
         Tile(335, 110),
     }
 
-    gStateMachine:change('play', {
-        player = Player(),
-        obstacles = Obstacles,
-        tiles = Tiles,
-    })
+    monitor = Monitor(gGraphics['monitor'], VIRTUAL_WIDTH-70,50)
+
+
 
     -- initialize our virtual resolution, which will be rendered within our
     -- actual window no matter its dimensions
@@ -185,7 +185,10 @@ function love.keypressed(key)
 
     if key == 'p' then
         gStateMachine:change('play', {
-            player = Player()
+            player = Player(),
+            obstacles = Obstacles,
+            monitor = monitor,
+            tiles = Tiles,
         })
     end
     
