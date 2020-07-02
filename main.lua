@@ -119,7 +119,7 @@ function love.load()
     Ghosts = {
         Ghost(gGraphics['ghosts']['adam'], 80, 0),
         Ghost(gGraphics['ghosts']['bob'], 224, 75, -1),
-        Ghost(gGraphics['ghosts']['carl'], 380, 0),
+        Ghost(gGraphics['ghosts']['carl'], 330, 12),
     }
 
     monitor = Monitor(gGraphics['monitor'], VIRTUAL_WIDTH-70,50)

@@ -17,11 +17,11 @@ function Ghost:init(img, x, dyFromGround, rotation)
     local dy = dyFromGround or 0
     self.y = VIRTUAL_HEIGHT - GROUND_HEIGHT - self.height - dy - ghostFloatHeight
     self.rotation = rotation or 1
-    self.isVisible = true
+    self.isVisible = false
 end
 
-function Ghost:makeVisible()
-    self.isVisible = true
+function Ghost:update(isVisible)
+    self.isVisible = isVisible
 end
 
 function Ghost:render()

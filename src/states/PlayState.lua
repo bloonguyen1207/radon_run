@@ -23,7 +23,7 @@ function PlayState:update(dt)
         self.player.height = gGraphics['player']['radon_left']:getHeight()
 
         for _, ghost in pairs(self.ghosts) do
-            ghost:makeVisible()
+            ghost:update(true)
         end
     end
 
