@@ -1,13 +1,8 @@
 MenuState = Class{__include = BaseState}
 
-function menu_load()
-
-end
-
 function MenuState:enter()
     music = gSounds['background']
     music:setVolume(0.5)
-
 end
 
 function MenuState:render()
@@ -22,12 +17,12 @@ function MenuState:render()
 end
 
 function MenuState:update(dt)
-
+    if love.keyboard.wasPressed('return') then
+        gStateMachine:change('info', {})
+    end
 end
 
-function MenuState:exit()
-
-end
+function MenuState:exit() end
 
 
 function love.keypressed(key)

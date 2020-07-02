@@ -6,11 +6,6 @@
 
 Player = Class{}
 
-local fps = 15
-local animTimer = 1/fps
-local frame = 1
-local numFrames = 12
-local xOffset
 
 function Player:init()
     self.width = gGraphics['player']['left']:getWidth()
@@ -24,7 +19,8 @@ function Player:init()
 
     self.hp = 100
     self.speed = 200
-    self.jumpSpeed = 500
+
+    self.jumpSpeed = 300
 
     self.skin = 0
     self.acquiredMonitor = false

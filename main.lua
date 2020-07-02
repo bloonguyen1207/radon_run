@@ -1,20 +1,4 @@
 require './src/Dependencies'
--- push is a library that will allow us to draw our game at a virtual
--- resolution, instead of however large our window is; used to provide
--- a more retro aesthetic
---
--- https://github.com/Ulydev/push
-push = require'lib/push'
-
--- the "Class" library we're using will allow us to represent anything in
--- our game as code, rather than keeping track of many disparate variables and
--- methods
---
--- https://github.com/vrld/hump/blob/master/class.lua
-Class = require'lib/class'
-
-require './src/states/menu'
-require './src/states/info'
 
 -- size of our actual window
 WINDOW_WIDTH = 1280
@@ -26,14 +10,6 @@ VIRTUAL_HEIGHT = 243
 
 -- Game title and shit
 GAME_TITLE = 'Radon Run'
-
-local backgroundScroll = 0
-local groundScroll = 0
-
-local BACKGROUND_SCROLL_SPEED = 30
-local GROUND_SCROLL_SPEED = 60
-
-local BACKGROUND_LOOPING_POINT = 50
 
 function love.load()
     -- set love's default filter to "nearest-neighbor", which essentially
@@ -47,7 +23,6 @@ function love.load()
     -- seed the RNG so that calls to random are always random
     math.randomseed(os.time())
 
-    -- TODO: Load sounds
     gSounds = {
         ['synne1'] = love.audio.newSource("sounds/Wergelandsveien7.wav", "static"),
         ['synne2'] = love.audio.newSource("sounds/Wergelandsveien73.wav", "static"),
@@ -56,7 +31,6 @@ function love.load()
         ['jump'] = love.audio.newSource("sounds/jump.wav"),
     }
 
-    -- TODO: Load graphics
     gGraphics = {
         ['background'] = love.graphics.newImage('graphics/background.png'),
         ['ground'] = love.graphics.newImage('graphics/ground.png'),
@@ -88,38 +62,12 @@ function love.load()
     }
 
     gStateMachine = StateMachine {
-        ['play'] = function() return PlayState() end,
         ['menu'] = function() return MenuState() end,
         ['info'] = function() return InfoState() end,
+        ['play'] = function() return PlayState() end,
     }
 
     gStateMachine:change('menu', {})
-    
-    -- Create obstacles
-    Obstacles = {
-        Obstacle(gGraphics['obstacles']['longTable'], 28),
-        Obstacle(gGraphics['obstacles']['lamp'], 31, 15),
-        Obstacle(gGraphics['obstacles']['mirror'], 108, 16),
-        Obstacle(gGraphics['obstacles']['bookcase'], 216),
-        Obstacle(gGraphics['obstacles']['diningTable'], 324),
-    }
-
-    -- Create tiles
-    Tiles = {
-        Tile(155, 50),
-        Tile(205, 75),
-        Tile(255, 75),
-        Tile(335, 110),
-    }
-
-    -- Create ghosts
-    Ghosts = {
-        Ghost(gGraphics['ghosts']['adam'], 80, 0),
-        Ghost(gGraphics['ghosts']['bob'], 224, 75, -1),
-        Ghost(gGraphics['ghosts']['carl'], 330, 12),
-    }
-
-    monitor = Monitor(gGraphics['monitor'], VIRTUAL_WIDTH-70,50)
 
     -- initialize our virtual resolution, which will be rendered within our
     -- actual window no matter its dimensions
@@ -177,28 +125,6 @@ function love.keyboard.wasPressed(key)
         return false
     end
 end
-
-function love.keypressed(key)
-    if key == 'return' then
-        gStateMachine:change('info', {})
-    end
-
-    if key == 'escape' then
-        gStateMachine:change('menu', {})
-    end
-
-    if key == 'p' then
-        gStateMachine:change('play', {
-            player = Player(),
-            obstacles = Obstacles,
-            monitor = monitor,
-            tiles = Tiles,
-            ghosts = Ghosts,
-        })
-    end
-    
-end
-
 
 --[[
     Called each frame after update; is responsible simply for

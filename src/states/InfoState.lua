@@ -7,7 +7,30 @@ function info_load()
 end
 
 function InfoState:enter()
+    self.player = Player()
+    self.obstacles = {
+        Obstacle(gGraphics['obstacles']['longTable'], 28),
+        Obstacle(gGraphics['obstacles']['lamp'], 31, 15),
+        Obstacle(gGraphics['obstacles']['mirror'], 108, 16),
+        Obstacle(gGraphics['obstacles']['bookcase'], 216),
+        Obstacle(gGraphics['obstacles']['diningTable'], 324),
+    }
+    -- Create tiles
+    self.tiles = {
+        Tile(155, 50),
+        Tile(205, 75),
+        Tile(255, 75),
+        Tile(335, 110),
+    }
 
+    -- Create ghosts
+    self.ghosts = {
+        Ghost(gGraphics['ghosts']['adam'], 80, 0),
+        Ghost(gGraphics['ghosts']['bob'], 224, 75, -1),
+        Ghost(gGraphics['ghosts']['carl'], 330, 12),
+    }
+
+    self.monitor = Monitor(VIRTUAL_WIDTH - 70, 50)
 end
 
 function InfoState:render()
@@ -31,14 +54,22 @@ function InfoState:render()
     src1:setVolume(1)
     src1:setPitch(1.5)
     src1:play()
+end
 
 
+
+function InfoState:update(dt)
+    if love.keyboard.wasPressed('p') or love.keyboard.wasPressed('return') then
+        gStateMachine:change('play', {
+            player = self.player,
+            obstacles = self.obstacles,
+            monitor = self.monitor,
+            tiles = self.tiles,
+            ghosts = self.ghosts,
+        })
+    end
 end
 
 function InfoState:exit()
     src1:stop()
-end
-
-function InfoState:update(dt)
-
 end

@@ -8,11 +8,9 @@ Monitor = Class{}
 
 local count = 0
 
-
-function Monitor:init(img, x, y)
-    self.image = img
-    self.width = img:getWidth()
-    self.height = img:getHeight()
+function Monitor:init(x, y)
+    self.width = gGraphics['monitor']:getWidth()
+    self.height = gGraphics['monitor']:getHeight()
     self.x = x
     self.y = y
     self.isVisible = true
@@ -23,6 +21,6 @@ end
 
 function Monitor:render()
     if self.isVisible then
-        love.graphics.draw(self.image, self.x, self.y, 0)
+        love.graphics.draw(gGraphics['monitor'], self.x, self.y, 0)
     end
 end
