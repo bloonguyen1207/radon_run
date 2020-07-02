@@ -64,8 +64,8 @@ function love.load()
 
     Player = Player()
     Obstacles = {
-        Obstacle(gGraphics['obstacles']['longTable'], 28),
-        Obstacle(gGraphics['obstacles']['lamp'], 31, 15),
+        Obstacle(gGraphics['obstacles']['longTable'], 14),
+        Obstacle(gGraphics['obstacles']['lamp'], 17, 15),
         Obstacle(gGraphics['obstacles']['mirror'], 108, 16),
         Obstacle(gGraphics['obstacles']['bookcase'], 216),
         Obstacle(gGraphics['obstacles']['diningTable'], 324),

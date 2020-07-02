@@ -34,22 +34,23 @@ function PlayState:update(dt)
         end
     end
 
+    local landedOnObject = false
+
     for _, tile in pairs(self.tiles) do
         if self.player:tileCollides(tile) and self.player.y + self.player.height / 2 <= tile.y then
             self.player.y = tile.y - self.player.height
-            -- self.player:update(dt, 0)
-        else
-            self.player:update(dt)
+            landedOnObject = true
         end
     end
 
     for _, obstacle in pairs(self.obstacles) do
         if self.player:collides(obstacle) and self.player.y + self.player.height / 2 <= obstacle.y then
             self.player.y = obstacle.y - self.player.height
+            landedOnObject = true
         end
     end
 
-    -- self.player:update(dt)
+    if landedOnObject then self.player:update(dt, 0) else self.player:update(dt) end
     self.monitor:update(dt)
 end
 
