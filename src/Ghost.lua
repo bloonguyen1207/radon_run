@@ -35,3 +35,7 @@ function Ghost:render()
         love.graphics.draw(self.image, self.x, self.y, 0, self.rotation, 1)
     end
 end
+
+function Ghost:reset()
+    self.isVisible = false
+end

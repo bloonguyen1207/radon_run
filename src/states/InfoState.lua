@@ -29,7 +29,16 @@ end
 
 function InfoState:update(dt)
     if love.keyboard.wasPressed('return') then
+        InfoState:resetGame()
         gStateMachine:change('menu', {})
+    end
+end
+
+function InfoState:resetGame()
+    Player:reset()
+    Monitor:reset()
+    for _, ghost in pairs(Ghosts) do
+        ghost:reset()
     end
 end
 

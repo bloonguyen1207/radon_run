@@ -14,11 +14,14 @@ function Monitor:init(x, y)
     self.isVisible = true
 end
 
-function Monitor:update(dt)
-end
+function Monitor:update(dt) end
 
 function Monitor:render()
     if self.isVisible then
         love.graphics.draw(gGraphics['monitor'], self.x, self.y, 0)
     end
+end
+
+function Monitor:reset()
+    self.isVisible = true
 end

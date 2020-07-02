@@ -20,7 +20,6 @@ function Player:init()
 
     self.jumpSpeed = 300
 
-    self.skin = 0
     self.acquiredMonitor = false
     self.numGhostsKilled = 0
 end
@@ -112,4 +111,13 @@ function Player:render()
             love.graphics.draw(gGraphics['player']['right'], self.x, self.y)
         end
     end
+end
+
+function Player:reset()
+    self.x = 50
+    self.y = VIRTUAL_HEIGHT - gGraphics['ground']:getHeight() - self.height
+    self.dy = 0
+    self.dx = 0
+    self.acquiredMonitor = false
+    self.numGhostsKilled = 0
 end
