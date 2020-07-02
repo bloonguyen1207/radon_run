@@ -45,6 +45,7 @@ function love.load()
 
     gamestate = 'menu'
     background = love.graphics.newImage('graphics/airbg.png')
+    font = love.graphics.newFont('fonts/m3x6.ttf',200)
 
     -- initialize our virtual resolution, which will be rendered within our
     -- actual window no matter its dimensions
@@ -93,6 +94,7 @@ end
     drawing all of our game objects and more to the screen.
 ]]
 function love.draw()
+    love.graphics.setFont( font )
 
     if gamestate == 'menu' then
         love.graphics.draw(background)
