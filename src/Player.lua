@@ -12,7 +12,7 @@ local frame = 1
 local numFrames = 12
 local xOffset
 
-function Player:init()
+function Player:init(skin)
     self.width = 16
     self.height = 16
 

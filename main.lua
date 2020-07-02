@@ -36,8 +36,8 @@ function love.load()
 
     -- TODO: Load graphics
     gGraphics = {
-        ['background'] = love.graphics.newImage('graphics/layer-1.png'),
-        ['ground'] = love.graphics.newImage('graphics/layer-2.png'),
+        ['background'] = love.graphics.newImage('graphics/background.png'),
+        ['ground'] = love.graphics.newImage('graphics/ground.png'),
         ['player'] = love.graphics.newImage('graphics/player.png')
     }
 
@@ -85,17 +85,6 @@ function love.update(dt)
 end
 
 --[[
-    A callback that processes key strokes as they happen, just the once.
-    Does not account for keys that are held down, which is handled by a
-    separate function (`love.keyboard.isDown`). Useful for when we want
-    things to happen right away, just once, like when we want to quit.
-]]
-function love.keypressed(key)
-    -- add to our table of keys pressed this frame
-    love.keyboard.keysPressed[key] = true
-end
-
---[[
     Called each frame after update; is responsible simply for
     drawing all of our game objects and more to the screen.
 ]]
@@ -108,21 +97,8 @@ function love.draw()
     local backgroundWidth = gGraphics['background']:getWidth()
     local backgroundHeight = gGraphics['background']:getHeight()
 
-    love.graphics.draw(gGraphics['background'],
-    -- draw at coordinates 0, 0
-            0, 0,
-    -- no rotation
-            0,
-    -- scale factors on X and Y axis so it fills the screen
-            VIRTUAL_WIDTH / (backgroundWidth - 1), VIRTUAL_HEIGHT / (backgroundHeight - 1))
-
-    love.graphics.draw(gGraphics['ground'],
-    -- draw at coordinates 0, 0
-            0, 0,
-    -- no rotation
-            0,
-    -- scale factors on X and Y axis so it fills the screen
-            VIRTUAL_WIDTH / (backgroundWidth - 1), VIRTUAL_HEIGHT / (backgroundHeight - 1))
+    love.graphics.draw(gGraphics['background'], 0, 0)
+    love.graphics.draw(gGraphics['ground'], 0, VIRTUAL_HEIGHT - 48)
 
     -- use the state machine to defer rendering to the current state we're in
     gStateMachine:render()
