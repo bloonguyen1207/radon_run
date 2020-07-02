@@ -36,6 +36,8 @@ function love.load()
     }
 
     gGraphics = {
+        ['menu'] = love.graphics.newImage('graphics/menu.png'),
+        ['logo'] = love.graphics.newImage('graphics/logo.png'),
         ['background'] = love.graphics.newImage('graphics/background.png'),
         ['ground'] = love.graphics.newImage('graphics/ground.png'),
         ['monitor'] = love.graphics.newImage('graphics/airthings.png'),
@@ -68,22 +70,26 @@ function love.load()
         Obstacle(gGraphics['obstacles']['bookcase'], 216),
         Obstacle(gGraphics['obstacles']['diningTable'], 324),
     }
+
     Tiles = {
         Tile(155, 50),
         Tile(205, 75),
         Tile(255, 75),
         Tile(335, 110),
     }
+
     Ghosts = {
         Ghost(gGraphics['ghosts']['adam'], 80, 0),
         Ghost(gGraphics['ghosts']['bob'], 224, 75, -1),
         Ghost(gGraphics['ghosts']['carl'], 330, 12),
     }
+
     Monitor = Monitor(VIRTUAL_WIDTH - 70, 50)
 
     gFonts = {
-        ['bigfont'] = love.graphics.newFont('fonts/m3x6.ttf',50),
-        ['smallfont'] = love.graphics.newFont('fonts/m3x6.ttf',20),
+        ['big'] = love.graphics.newFont('fonts/font.ttf', 32),
+        ['medium'] = love.graphics.newFont('fonts/font.ttf', 16),
+        ['small'] = love.graphics.newFont('fonts/font.ttf', 8),
     }
 
     gStateMachine = StateMachine {
@@ -157,7 +163,7 @@ end
     drawing all of our game objects and more to the screen.
 ]]
 function love.draw()
-    love.graphics.setFont( gFonts['smallfont'] )
+    love.graphics.setFont( gFonts['small'] )
 
     -- begin drawing with push, in our virtual resolution
     push:start()

@@ -5,11 +5,11 @@ function GhostInfoState:enter(params)
 end
 
 function GhostInfoState:render()
-    love.graphics.draw(self.image, 100, 27)
+    love.graphics.draw(self.image, 140, 18)
     love.graphics.setColor(0,0,0)
-    love.graphics.setFont( gFonts['bigfont'] )
+    love.graphics.setFont( gFonts['big'] )
     love.graphics.print('RADON', 30, 10)
-    love.graphics.setFont( gFonts['smallfont'] )
+    love.graphics.setFont( gFonts['small'] )
 
     if self.image == gGraphics['ghosts']['adam'] then
         love.graphics.print('Radon does not show any short term effects,', 30, 50)
@@ -26,6 +26,9 @@ function GhostInfoState:render()
         love.graphics.print('professional to determine a possible solution.', 30, 90)
         love.graphics.print('[press enter to continue]', 30, 130)
     end
+
+    love.graphics.setFont( gFonts['medium'] )
+    love.graphics.print('Press `Enter` to continue', 30, 170)
 end
 
 function GhostInfoState:update()
