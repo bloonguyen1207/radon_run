@@ -1,4 +1,21 @@
-require 'src/Dependencies'
+require './src/Dependencies'
+-- push is a library that will allow us to draw our game at a virtual
+-- resolution, instead of however large our window is; used to provide
+-- a more retro aesthetic
+--
+-- https://github.com/Ulydev/push
+push = require'lib/push'
+
+-- the "Class" library we're using will allow us to represent anything in
+-- our game as code, rather than keeping track of many disparate variables and
+-- methods
+--
+-- https://github.com/vrld/hump/blob/master/class.lua
+Class = require'lib/class'
+
+require './src/states/menu'
+require './src/states/info'
+require './src/states/characters'
 
 -- size of our actual window
 WINDOW_WIDTH = 1280
@@ -26,6 +43,8 @@ function love.load()
     -- TODO: Load sounds
     -- TODO: Load graphics
 
+    gamestate = 'menu'
+
     -- initialize our virtual resolution, which will be rendered within our
     -- actual window no matter its dimensions
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
@@ -37,6 +56,12 @@ end
 
 function love.update(dt)
     -- Game loop
+
+    if gamestate == 'menu' then
+		-- Loads all needed assets and variables.
+		-- reload()
+    end
+    
 end
 
 --[[
@@ -47,6 +72,19 @@ end
 ]]
 function love.keypressed(key)
 
+    if gamestate == 'menu' then
+		-- For starting a new game.
+		if key == 'return' then
+			gamestate = 'info'
+        end
+    elseif gamestate == 'info' then
+    
+        if key == 'return' then
+            gamestate = 'characters'
+        end
+    end
+    
+
 end
 
 --[[
@@ -54,5 +92,22 @@ end
     drawing all of our game objects and more to the screen.
 ]]
 function love.draw()
+
+    if gamestate == 'menu' then
+		love.graphics.newImage('./graphics/pixelbg.png')
+		menu_draw()
+    end
+    
+    if gamestate == 'info' then
+        love.graphics.setBackgroundColor(1, 0, 0)
+
+        info_draw()
+    end
+
+    if gamestate == 'characters' then
+        love.graphics.setBackgroundColor(0, 1, 0)
+
+        characters_draw()
+    end
 
 end
