@@ -41,7 +41,19 @@ function love.load()
     math.randomseed(os.time())
 
     -- TODO: Load sounds
+    gFonts = {}
+
     -- TODO: Load graphics
+    gGraphics = {
+        ['player'] = love.graphics.newImage('graphics/player.png')
+    }
+
+    gFrames = {
+        ['player'] = GeneratePlayerQuads(gGraphics['player'])
+    }
+
+    -- TODO: Load sounds
+    gSounds = {}
 
     gamestate = 'menu'
     background = love.graphics.newImage('graphics/airbg.png')
