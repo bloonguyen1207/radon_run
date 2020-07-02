@@ -22,6 +22,12 @@ end
 
 function Ghost:update(isVisible)
     self.isVisible = isVisible
+    -- if update makes ghost disappear, display info page
+    if not(isVisible) then
+        gStateMachine:change('ghostInfo', {
+            image = self.image
+        })
+    end
 end
 
 function Ghost:render()

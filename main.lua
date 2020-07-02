@@ -11,6 +11,8 @@ VIRTUAL_HEIGHT = 243
 -- Game title and shit
 GAME_TITLE = 'Radon Run'
 
+TOTAL_GHOST_COUNT = 3
+
 function love.load()
     -- set love's default filter to "nearest-neighbor", which essentially
     -- means there will be no filtering of pixels (blurriness), which is
@@ -56,6 +58,27 @@ function love.load()
         }
     }
 
+    Player = Player()
+    Obstacles = {
+        Obstacle(gGraphics['obstacles']['longTable'], 28),
+        Obstacle(gGraphics['obstacles']['lamp'], 31, 15),
+        Obstacle(gGraphics['obstacles']['mirror'], 108, 16),
+        Obstacle(gGraphics['obstacles']['bookcase'], 216),
+        Obstacle(gGraphics['obstacles']['diningTable'], 324),
+    }
+    Tiles = {
+        Tile(155, 50),
+        Tile(205, 75),
+        Tile(255, 75),
+        Tile(335, 110),
+    }
+    Ghosts = {
+        Ghost(gGraphics['ghosts']['adam'], 80, 0),
+        Ghost(gGraphics['ghosts']['bob'], 224, 75, -1),
+        Ghost(gGraphics['ghosts']['carl'], 330, 12),
+    }
+    Monitor = Monitor(VIRTUAL_WIDTH - 70, 50)
+
     gFonts = {
         ['bigfont'] = love.graphics.newFont('fonts/m3x6.ttf',50),
         ['smallfont'] = love.graphics.newFont('fonts/m3x6.ttf',20),
@@ -65,6 +88,7 @@ function love.load()
         ['menu'] = function() return MenuState() end,
         ['info'] = function() return InfoState() end,
         ['play'] = function() return PlayState() end,
+        ['ghostInfo'] = function() return GhostInfoState() end,
     }
 
     gStateMachine:change('menu', {})
