@@ -42,9 +42,26 @@ function Player:collides(target)
     return true
 end
 
-function Player:update(dt)
+function Player:tileCollides(target)
+    -- first, check to see if the left edge of either is farther to the right
+    -- than the right edge of the other
+    if self.x > target.x + target.width or target.x > self.x + self.width then
+        return false
+    end
+
+    -- then check to see if the bottom edge of either is higher than the top
+    -- edge of the other
+    if target.y > self.y + self.height then
+        return false
+    end
+
+    -- if the above aren't true, they're overlapping
+    return true
+end
+
+function Player:update(dt, dy)
     -- apply velocity to character Y
-    self.dy = self.dy + GRAVITY
+    self.dy = dy or self.dy + GRAVITY
     self.y = self.y + self.dy * dt
 
     -- if we've gone below the map limit, set DY to 0
