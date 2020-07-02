@@ -25,5 +25,7 @@ function Ghost:update(isVisible)
 end
 
 function Ghost:render()
-    if self.isVisible then love.graphics.draw(self.image, self.x, self.y, 0, self.rotation, 1) end
+    if self.isVisible then
+        love.graphics.draw(self.image, self.x, self.y, 0, self.rotation, 1)
+    end
 end
