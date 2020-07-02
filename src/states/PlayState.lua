@@ -11,6 +11,7 @@ function PlayState:enter(params)
     self.monitor = params.monitor
     self.obstacles = params.obstacles
     self.tiles = params.tiles
+
 end
 
 function PlayState:update(dt)
