@@ -33,3 +33,5 @@ require 'src/Player'
 
 require 'src/states/BaseState'
 require 'src/states/PlayState'
+require 'src/states/menu'
+require 'src/states/info'

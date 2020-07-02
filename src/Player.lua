@@ -6,6 +6,12 @@
 
 Player = Class{}
 
+local fps = 15
+local animTimer = 1/fps
+local frame = 1
+local numFrames = 12
+local xOffset
+
 function Player:init(skin)
     self.width = 16
     self.height = 16
@@ -14,8 +20,9 @@ function Player:init(skin)
     self.dx = 0
 
     self.hp = 100
+    self.speed = 200
 
-    self.skin = skin
+    self.skin = 0
 end
 
 function Player:collides(target)
@@ -33,4 +40,33 @@ function Player:collides(target)
 
     -- if the above aren't true, they're overlapping
     return true
+end
+
+function Player:update(dt)
+    -- keyboard input
+    if love.keyboard.isDown('a') then
+        self.dx = -self.speed
+    elseif love.keyboard.isDown('d') then
+        self.dx = self.speed
+    else
+        self.dx = 0
+    end
+
+    animTimer = animTimer - dt
+
+    if animTimer <= 0 then
+        animTimer = 1/fps
+        frame = frame + 1
+
+        if frame > numFrames then frame = 1 end
+
+        xOffset = 16 * frame
+
+        --gFrames['player']['left']:setViewPort(xOffset, 16, 16, 16)
+
+    end
+end
+
+function Player:render()
+    love.graphics.rectangle("fill", 50, 200, 16, 16)
 end

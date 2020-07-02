@@ -27,6 +27,14 @@ VIRTUAL_HEIGHT = 243
 -- Game title and shit
 GAME_TITLE = 'AT Game'
 
+local backgroundScroll = 0
+local groundScroll = 0
+
+local BACKGROUND_SCROLL_SPEED = 30
+local GROUND_SCROLL_SPEED = 60
+
+local BACKGROUND_LOOPING_POINT = 50
+
 function love.load()
     -- set love's default filter to "nearest-neighbor", which essentially
     -- means there will be no filtering of pixels (blurriness), which is
@@ -40,10 +48,14 @@ function love.load()
     math.randomseed(os.time())
 
     -- TODO: Load sounds
-    gFonts = {}
+    gSounds = {
+        ['synne'] = love.audio.newSource("sounds/Wergelandsveien73.wav", "static"),
+    }
 
     -- TODO: Load graphics
     gGraphics = {
+        ['background'] = love.graphics.newImage('graphics/background.png'),
+        ['ground'] = love.graphics.newImage('graphics/ground.png'),
         ['player'] = love.graphics.newImage('graphics/player.png')
     }
 
@@ -51,13 +63,23 @@ function love.load()
         ['player'] = GeneratePlayerQuads(gGraphics['player'])
     }
 
+    gFonts = {
+        ['bigfont'] = love.graphics.newFont('fonts/m3x6.ttf',50),
+        ['smallfont'] = love.graphics.newFont('fonts/m3x6.ttf',20),
+    }
+
     -- TODO: Load sounds
-    gSounds = {}
 
     gamestate = 'menu'
-    background = love.graphics.newImage('graphics/airbg.png')
-    bigfont = love.graphics.newFont('fonts/m3x6.ttf',200)
-    smallfont = love.graphics.newFont('fonts/m3x6.ttf',100)
+
+
+    gStateMachine = StateMachine {
+        ['play'] = function() return PlayState() end,
+        ['menu'] = function() return MenuState() end,
+        ['info'] = function() return InfoState() end,
+    }
+
+    gStateMachine:change('menu', {})
 
     -- initialize our virtual resolution, which will be rendered within our
     -- actual window no matter its dimensions
@@ -68,55 +90,71 @@ function love.load()
     })
 end
 
+--[[
+    Called whenever we change the dimensions of our window, as by dragging
+    out its bottom corner, for example. In this case, we only need to worry
+    about calling out to `push` to handle the resizing. Takes in a `w` and
+    `h` variable representing width and height, respectively.
+]]
+function love.resize(w, h)
+    push:resize(w, h)
+end
+
+
 function love.update(dt)
     -- Game loop
+    -- scroll our background and ground, looping back to 0 after a certain amount
+    backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt) % BACKGROUND_LOOPING_POINT
+    groundScroll = (groundScroll + GROUND_SCROLL_SPEED * dt) % VIRTUAL_WIDTH
 
-    if gamestate == 'menu' then
-		-- Loads all needed assets and variables.
-		-- reload()
-    end
-    
+    gStateMachine:update(dt)
 end
 
---[[
-    A callback that processes key strokes as they happen, just the once.
-    Does not account for keys that are held down, which is handled by a
-    separate function (`love.keyboard.isDown`). Useful for when we want
-    things to happen right away, just once, like when we want to quit.
-]]
 function love.keypressed(key)
+    if key == 'return' then
+    gStateMachine:change('info', {})
+    end
 
-    if gamestate == 'menu' then
-		-- For starting a new game.
-		if key == 'return' then
-			gamestate = 'info'
-        end
-    elseif gamestate == 'info' then
-    
-        if key == 'return' then
-            gamestate = 'gameplay'
-        end
+    if key == 'escape' then
+    gStateMachine:change('menu', {})
+    end
+
+    if key == 'p' then
+        gStateMachine:change('play', {
+            player = Player()
+        })
     end
     
-
 end
+
 
 --[[
     Called each frame after update; is responsible simply for
     drawing all of our game objects and more to the screen.
 ]]
 function love.draw()
-    love.graphics.setFont( bigfont )
+    love.graphics.setFont( gFonts['smallfont'] )
     local x, y = love.mouse.getPosition()
 
-    if gamestate == 'menu' then
-        love.graphics.draw(background)
-		menu_draw()
-    end
-    
-    if gamestate == 'info' then
+    -- begin drawing with push, in our virtual resolution
+    push:start()
 
-        info_draw()
-    end
+    -- background should be drawn regardless of state, scaled to fit our
+    -- virtual resolution
+    local backgroundWidth = gGraphics['background']:getWidth()
+    local backgroundHeight = gGraphics['background']:getHeight()
 
+    love.graphics.draw(gGraphics['background'], 0, 0)
+    love.graphics.draw(gGraphics['ground'], 0, VIRTUAL_HEIGHT - 48)
+
+    -- use the state machine to defer rendering to the current state we're in
+    gStateMachine:render()
+
+    -- display FPS for debugging; simply comment out to remove
+
+    push:finish()
 end
+
+--[[
+    Renders the current FPS.
+]]
