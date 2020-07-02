@@ -13,7 +13,7 @@ end
 function InfoState:render()
     src1 = gSounds['synne1']
     src2 = gSounds['synne2']
-    love.graphics.draw(gGraphics['radon1'], 100, 27)
+    love.graphics.draw(gGraphics['ghosts']['bob'], 100, 27)
     love.graphics.setColor(0,0,0)
     love.graphics.setFont( gFonts['bigfont'] )
     love.graphics.print('RADON', 30, 10)
@@ -25,7 +25,7 @@ function InfoState:render()
     love.graphics.print('Radon induced lung cancer kills more than house fires and', 30, 110)
     love.graphics.print('carbon monoxide combined.', 30, 130)
     love.graphics.print('Read more at:', 30, 170)
-    love.graphics.setFont( gFonts['bigfont'] )
+    love.graphics.setFont(gFonts['bigfont'])
     love.graphics.print('www.airthings.com.', 30, 193)
 
     src1:setVolume(1)

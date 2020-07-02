@@ -61,7 +61,6 @@ function love.load()
         ['background'] = love.graphics.newImage('graphics/background.png'),
         ['ground'] = love.graphics.newImage('graphics/ground.png'),
         ['monitor'] = love.graphics.newImage('graphics/airthings.png'),
-        ['ghostie'] = love.graphics.newImage('graphics/Radon1.png'),
         ['obstacles'] = {
             ['bookcase'] = love.graphics.newImage('graphics/furni2.png'),
             ['longTable'] = love.graphics.newImage('graphics/furni5.png'),
@@ -217,8 +216,6 @@ function love.draw()
 
     -- use the state machine to defer rendering to the current state we're in
     gStateMachine:render()
-
-    -- display FPS for debugging; simply comment out to remove
 
     push:finish()
 end

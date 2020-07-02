@@ -73,6 +73,7 @@ function Player:update(dt)
 
     if love.keyboard.isDown('up') then
         self.dy = -self.jumpSpeed
+        gSounds['jump']:setVolume(0.5)
         gSounds['jump']:play()
     elseif self.y < VIRTUAL_HEIGHT - gGraphics['ground']:getHeight() - self.height then
         self.dy = self.jumpSpeed
@@ -88,6 +89,12 @@ function Player:update(dt)
 end
 
 function Player:render()
+
+    if self.acquiredMonitor then
+        self.width = gGraphics['player']['radon_left']:getWidth()
+        self.height = gGraphics['player']['radon_left']:getHeight()
+    end
+
     if self.dx < 0 then
         if self.acquiredMonitor then
             love.graphics.draw(gGraphics['player']['radon_left'], self.x, self.y)

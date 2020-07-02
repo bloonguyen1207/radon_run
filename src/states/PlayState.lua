@@ -15,24 +15,21 @@ function PlayState:enter(params)
 end
 
 function PlayState:update(dt)
-    if self.player:collides(monitor) then
-        self.player.acquireMonitor = true
-        self.monitor.isVisible = false
+    self.player:update(dt)
+    self.monitor:update(dt)
 
-        self.player.width = gGraphics['player']['radon_left']:getWidth()
-        self.player.height = gGraphics['player']['radon_left']:getHeight()
+    if self.player:collides(self.monitor) and self.monitor.isVisible then
+        self.player.acquiredMonitor = true
+        self.monitor.isVisible = false
+        gSounds['monitorPickup']:play()
 
         for _, ghost in pairs(self.ghosts) do
             ghost:update(true)
         end
     end
-
-    self.player:update(dt)
-    self.monitor:update(dt)
 end
 
 function PlayState:render()
-    self.player:render()
     self.monitor:render()
 
     for _, obstacle in pairs(self.obstacles) do
