@@ -8,6 +8,7 @@ PlayState = Class{__include = BaseState}
 
 function PlayState:enter(params)
     self.player = params.player
+    self.monitor = params.monitor
 end
 
 function PlayState:update(dt)
@@ -16,6 +17,8 @@ end
 
 function PlayState:render()
     self.player:render()
+    self.monitor:render()
+
 end
 
 

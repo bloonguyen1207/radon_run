@@ -58,7 +58,8 @@ function love.load()
         ['ground'] = love.graphics.newImage('graphics/ground.png'),
         ['player'] = love.graphics.newImage('graphics/player.png'),
         ['furni1'] = love.graphics.newImage('graphics/furni1.png'),
-        ['radon1'] = love.graphics.newImage('graphics/Radon1.png')
+        ['radon1'] = love.graphics.newImage('graphics/Radon1.png'),
+        ['monitor'] = love.graphics.newImage('graphics/airthings.png'),
     }
 
     gFrames = {
@@ -74,6 +75,7 @@ function love.load()
 
     gamestate = 'menu'
 
+    Monitor(gGraphics['monitor'], 40)
 
     gStateMachine = StateMachine {
         ['play'] = function() return PlayState() end,
@@ -82,6 +84,7 @@ function love.load()
     }
 
     gStateMachine:change('menu', {})
+
 
     -- initialize our virtual resolution, which will be rendered within our
     -- actual window no matter its dimensions
