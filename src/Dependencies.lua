@@ -28,6 +28,7 @@ require 'src/StateMachine'
 require 'src/Player'
 require 'src/Obstacle'
 require 'src/Tile'
+require 'src/Ghost'
 
 -- each of the individual states our game can be in at once; each state has
 -- its own update and render methods that can be called by our state machine
