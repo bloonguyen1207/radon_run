@@ -6,7 +6,6 @@
 
 Monitor = Class{}
 
-
 function Monitor:init(img, x, y)
     self.image = img
     self.width = img:getWidth()
@@ -23,15 +22,12 @@ function Monitor:collides(target)
     target.y < self.y + self.height then
         self.isVisible = false
     end
-    
 end
 
 function Monitor:update(dt)
-
 end
 
 function Monitor:render()
-
     if self.isVisible then
         love.graphics.draw(self.image, self.x, self.y, 0)
     end

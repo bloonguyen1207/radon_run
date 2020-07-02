@@ -52,6 +52,7 @@ function love.load()
     -- TODO: Load sounds
     gSounds = {
         ['synne'] = love.audio.newSource("sounds/Wergelandsveien73.wav", "static"),
+        ['jump'] = love.audio.newSource("sounds/jump.wav"),
     }
 
     -- TODO: Load graphics
@@ -82,12 +83,6 @@ function love.load()
         ['smallfont'] = love.graphics.newFont('fonts/m3x6.ttf',20),
     }
 
-    -- TODO: Load sounds
-
-    gamestate = 'menu'
-
-    
-
     gStateMachine = StateMachine {
         ['play'] = function() return PlayState() end,
         ['menu'] = function() return MenuState() end,
@@ -114,8 +109,6 @@ function love.load()
     }
 
     monitor = Monitor(gGraphics['monitor'], VIRTUAL_WIDTH-70,50)
-
-
 
     -- initialize our virtual resolution, which will be rendered within our
     -- actual window no matter its dimensions
@@ -176,11 +169,11 @@ end
 
 function love.keypressed(key)
     if key == 'return' then
-    gStateMachine:change('info', {})
+        gStateMachine:change('info', {})
     end
 
     if key == 'escape' then
-    gStateMachine:change('menu', {})
+        gStateMachine:change('menu', {})
     end
 
     if key == 'p' then
@@ -216,7 +209,3 @@ function love.draw()
 
     push:finish()
 end
-
---[[
-    Renders the current FPS.
-]]

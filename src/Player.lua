@@ -12,7 +12,7 @@ local frame = 1
 local numFrames = 12
 local xOffset
 
-function Player:init(skin)
+function Player:init()
     self.width = gGraphics['player']['left']:getWidth()
     self.height = gGraphics['player']['left']:getHeight()
 
@@ -73,6 +73,7 @@ function Player:update(dt)
 
     if love.keyboard.isDown('up') then
         self.dy = -self.jumpSpeed
+        gSounds['jump']:play()
     elseif self.y < VIRTUAL_HEIGHT - gGraphics['ground']:getHeight() - self.height then
         self.dy = self.jumpSpeed
     else
@@ -87,13 +88,17 @@ function Player:update(dt)
 end
 
 function Player:render()
-    playerHeight = gGraphics['player']['left']:getHeight()
-    playerWidth = gGraphics['player']['left']:getWidth()
-    playerRadonHeight = gGraphics['player']['left']:getHeight()
-    playerRadonWidth = gGraphics['player']['left']:getWidth()
     if self.dx < 0 then
-        love.graphics.draw(gGraphics['player']['left'], self.x, self.y)
+        if self.acquiredMonitor then
+            love.graphics.draw(gGraphics['player']['radon_left'], self.x, self.y)
+        else
+            love.graphics.draw(gGraphics['player']['left'], self.x, self.y)
+        end
     else
-        love.graphics.draw(gGraphics['player']['right'], self.x, self.y)
+        if self.acquiredMonitor then
+            love.graphics.draw(gGraphics['player']['radon_right'], self.x, self.y)
+        else
+            love.graphics.draw(gGraphics['player']['right'], self.x, self.y)
+        end
     end
 end

@@ -14,11 +14,17 @@ function PlayState:enter(params)
 end
 
 function PlayState:update(dt)
-    self.player:update(dt)
 
-    if monitor:collides(self.player) then
-        monitor.isVisible = false
+    if self.player:collides(monitor) then
+        self.player.acquireMonitor = true
+        self.monitor.isVisible = false
+
+        self.player.width = gGraphics['player']['radon_left']:getWidth()
+        self.player.height = gGraphics['player']['radon_left']:getHeight()
     end
+
+    self.player:update(dt)
+    self.monitor:update(dt)
 end
 
 function PlayState:render()
@@ -34,5 +40,7 @@ function PlayState:render()
 
     self.player:render()
 end
+
+function PlayState:exit() end
 
 
