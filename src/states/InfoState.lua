@@ -4,11 +4,10 @@ function InfoState:enter() end
 
 function InfoState:render()
     src1 = gSounds['synne1']
-    src2 = gSounds['synne2']
     love.graphics.draw(gGraphics['ghosts']['bob'], 175, 18)
     love.graphics.setColor(0,0,0)
     love.graphics.setFont( gFonts['big'] )
-    love.graphics.print('The end', 30, 10)
+    love.graphics.print('THE END', 30, 10)
     
     love.graphics.setFont( gFonts['small'] )
     love.graphics.print('Radon does not show any short term effects,', 30, 50)
