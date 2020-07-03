@@ -92,7 +92,6 @@ function Player:update(dt, dy)
 end
 
 function Player:render()
-
     if self.acquiredMonitor then
         self.width = gGraphics['player']['radon_left']:getWidth()
         self.height = gGraphics['player']['radon_left']:getHeight()
