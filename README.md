@@ -9,4 +9,9 @@ An educational game about indoor air quality
 * Learn about the contaminants on the way
 * Link to the contaminant pages at airthings.com when you finish each level
 
+## Setup
+1. Download [LÖVE v.0.10.2] (https://bitbucket.org/rude/love/downloads/).
+2. Add LÖVE directory to PATH: https://love2d.org/wiki/PATH
+3. From root directory, start the game by running `love .`
+
 :runner: <em>Hackathon project made by Synne, Bloo, Eli, Linh, Agnes (and Latika in spirit)<em> :runner:
