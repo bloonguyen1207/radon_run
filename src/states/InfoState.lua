@@ -19,8 +19,8 @@ function InfoState:render()
 
     love.graphics.setFont( gFonts['medium'] )
     love.graphics.print('Press `Space` to read more at:', 30, 170)
-    love.graphics.setFont(gFonts['big'])
-    love.graphics.print('www.airthings.com', 30, 205)
+    love.graphics.setColor(255,255,255)
+    love.graphics.draw(gGraphics['logo'], 30, 205 )
 
     src1:setVolume(1)
     src1:setPitch(1.5)

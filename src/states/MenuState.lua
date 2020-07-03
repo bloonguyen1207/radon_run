@@ -20,9 +20,9 @@ end
 function MenuState:render()
     music:play()
     love.graphics.draw(gGraphics['menu'], 0, 0)
-    love.graphics.draw(gGraphics['logo'], VIRTUAL_WIDTH - gGraphics['logo']:getWidth() - 20, VIRTUAL_HEIGHT - gGraphics['logo']:getHeight() - 8)
+   -- love.graphics.draw(gGraphics['logo'], VIRTUAL_WIDTH - gGraphics['logo']:getWidth()/ 2, VIRTUAL_HEIGHT - gGraphics['logo']:getHeight() )
 
-    love.graphics.setFont( gFonts['medium'] )
+    love.graphics.setFont( gFonts['small'] )
     love.graphics.setColor(0, 0, 0)
 	love.graphics.printf('Press `Enter` to play', 0, VIRTUAL_HEIGHT - 80, VIRTUAL_WIDTH, "center")
 end
