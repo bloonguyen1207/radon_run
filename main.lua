@@ -67,24 +67,24 @@ function love.load()
         Obstacle(gGraphics['obstacles']['longTable'], 14),
         Obstacle(gGraphics['obstacles']['lamp'], 17, 15),
         Obstacle(gGraphics['obstacles']['mirror'], 108, 16),
-        Obstacle(gGraphics['obstacles']['bookcase'], 216),
+        Obstacle(gGraphics['obstacles']['bookcase'], 180),
         Obstacle(gGraphics['obstacles']['diningTable'], 324),
     }
 
     Tiles = {
-        Tile(155, 50),
-        Tile(205, 75),
+        Tile(50, 120),
+        Tile(125, 75),
         Tile(255, 75),
-        Tile(335, 110),
+        Tile(335, 120),
     }
 
     Ghosts = {
-        Ghost(gGraphics['ghosts']['adam'], 80, 0),
-        Ghost(gGraphics['ghosts']['bob'], 224, 75, -1),
-        Ghost(gGraphics['ghosts']['carl'], 330, 12),
+        Ghost(gGraphics['ghosts']['adam'], 50, 150),
+        Ghost(gGraphics['ghosts']['bob'], 224, 95, -1),
+        Ghost(gGraphics['ghosts']['carl'], 330, 30),
     }
 
-    Monitor = Monitor(VIRTUAL_WIDTH - 70, 50)
+    Monitor = Monitor(VIRTUAL_WIDTH - 50, 30)
 
     gFonts = {
         ['big'] = love.graphics.newFont('fonts/font.ttf', 32),

@@ -17,8 +17,7 @@ function Player:init()
     self.dx = 0
 
     self.speed = 100
-
-    self.jumpSpeed = 300
+    self.jumpSpeed = 220
 
     self.acquiredMonitor = false
     self.numGhostsKilled = 0
