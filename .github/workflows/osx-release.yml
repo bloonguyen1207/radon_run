@@ -1,0 +1,150 @@
+on:
+  push:
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+name: Build OSX
+
+jobs:
+  build:
+    runs-on: macos-10.15
+
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    - name: Zip game files
+      run: zip -9 -r radon_run.love .
+    - name: Get engine
+      run: | 
+        curl -OL   https://bitbucket.org/rude/love/downloads/love-0.10.2-macosx-x64.zip
+        unzip -a ./love-0.10.2-macosx-x64.zip
+    - name: Package game with engine
+      run: |
+        mv love.app radon_run.app
+        cp radon_run.love radon_run.app/Contents/Resources/
+#        cat <<EOT > radon_run.app/Contents/Info.plist
+#          <?xml version="1.0" encoding="UTF-8"?>
+#          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+#          <plist version="1.0">
+#          <dict>
+#            <key>BuildMachineOSBuild</key>
+#            <string>16A323</string>
+#            <key>CFBundleDevelopmentRegion</key>
+#            <string>English</string>
+#            <key>CFBundleDocumentTypes</key>
+#            <array>
+#              <dict>
+#                <key>CFBundleTypeExtensions</key>
+#                <array>
+#                  <string>love</string>
+#                </array>
+#                <key>CFBundleTypeIconFile</key>
+#                <string>GameIcon</string>
+#                <key>CFBundleTypeName</key>
+#                <string>LÖVE Project</string>
+#                <key>CFBundleTypeRole</key>
+#                <string>Viewer</string>
+#                <key>LSHandlerRank</key>
+#                <string>Owner</string>
+#                <key>LSItemContentTypes</key>
+#                <array>
+#                  <string>org.love2d.love-game</string>
+#                </array>
+#                <key>LSTypeIsPackage</key>
+#                <integer>1</integer>
+#              </dict>
+#              <dict>
+#                <key>CFBundleTypeName</key>
+#                <string>Folder</string>
+#                <key>CFBundleTypeOSTypes</key>
+#                <array>
+#                  <string>fold</string>
+#                </array>
+#                <key>CFBundleTypeRole</key>
+#                <string>Viewer</string>
+#                <key>LSHandlerRank</key>
+#                <string>None</string>
+#              </dict>
+#              <dict>
+#                <key>CFBundleTypeIconFile</key>
+#                <string>Document</string>
+#                <key>CFBundleTypeName</key>
+#                <string>Document</string>
+#                <key>CFBundleTypeOSTypes</key>
+#                <array>
+#                  <string>****</string>
+#                </array>
+#                <key>CFBundleTypeRole</key>
+#                <string>Editor</string>
+#              </dict>
+#            </array>
+#            <key>CFBundleExecutable</key>
+#            <string>love</string>
+#            <key>CFBundleIconFile</key>
+#            <string>OS X AppIcon</string>
+#            <key>CFBundleIdentifier</key>
+#            <string>com.airthings.radon_run</string>
+#            <key>CFBundleInfoDictionaryVersion</key>
+#            <string>6.0</string>
+#            <key>CFBundleName</key>
+#            <string>radon_run</string>
+#            <key>CFBundlePackageType</key>
+#            <string>APPL</string>
+#            <key>CFBundleShortVersionString</key>
+#            <string>0.10.2</string>
+#            <key>CFBundleSignature</key>
+#            <string>LoVe</string>
+#            <key>CFBundleSupportedPlatforms</key>
+#            <array>
+#              <string>MacOSX</string>
+#            </array>
+#            <key>DTCompiler</key>
+#            <string>com.apple.compilers.llvm.clang.1_0</string>
+#            <key>DTPlatformBuild</key>
+#            <string>8B62</string>
+#            <key>DTPlatformVersion</key>
+#            <string>GM</string>
+#            <key>DTSDKBuild</key>
+#            <string>16B2649</string>
+#            <key>DTSDKName</key>
+#            <string>macosx10.12</string>
+#            <key>DTXcode</key>
+#            <string>0810</string>
+#            <key>DTXcodeBuild</key>
+#            <string>8B62</string>
+#            <key>LSApplicationCategoryType</key>
+#            <string>public.app-category.games</string>
+#            <key>NSHighResolutionCapable</key>
+#            <true/>
+#            <key>NSHumanReadableCopyright</key>
+#            <string>© 2020 Airthings Development Team</string>
+#            <key>NSPrincipalClass</key>
+#            <string>NSApplication</string>
+#            <key>UTExportedTypeDeclarations</key>
+#          </dict>
+#          </plist>
+#        EOT
+    - name: Package release
+      run: zip -r radon_run-macosx-x64.zip radon_run.app
+                
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+        asset_path: ./radon_run-macosx-x64.zip
+        asset_name: radon_run-macosx-x64.zip
+        asset_content_type: application/zip 
