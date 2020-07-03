@@ -18,10 +18,6 @@ function PlayState:update(dt)
     self.player:update(dt)
     self.monitor:update(dt)
 
-    for _, ghost in pairs(self.ghosts) do
-        ghost:update(dt)
-    end
-
     if self.player:collides(self.monitor) and self.monitor.isVisible then
         self.player.acquiredMonitor = true
         self.monitor.isVisible = false
@@ -33,6 +29,7 @@ function PlayState:update(dt)
     end
 
     for _, ghost in pairs(self.ghosts) do
+        ghost:update(dt)
         if ghost.isVisible and not(ghost.isKilled) and self.player:collides(ghost) then
             ghost.isKilled = true
         end
