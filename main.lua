@@ -10,7 +10,6 @@ VIRTUAL_HEIGHT = 243
 
 -- Game title and shit
 GAME_TITLE = 'Radon Run'
-
 GRAVITY = 7
 
 TOTAL_GHOST_COUNT = 3
