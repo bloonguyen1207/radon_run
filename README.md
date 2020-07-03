@@ -3,7 +3,7 @@ An educational game about indoor air quality
 
 ![Radon Run Logo](https://github.com/bloonguyen1207/radon_run/blob/master/graphics/menu.png?raw=true)
 
-:runner: *Hackathon project made by Synne, Bloo, Eli, Linh, Agnes (and Latika in spirit) at Airthings summer 2020*:runner:
+:runner: *Hackathon project made by Synne, Bloo, Eli, Linh, Agnes (and Latika in spirit) at Airthings, Summer 2020*:runner:
 
 
 ## Current Features
@@ -22,6 +22,6 @@ An educational game about indoor air quality
 * Different player characters, and different environments (office, basement, schools etc)
 
 ## Setup
-1. Download [LÖVE v.0.10.2] (https://bitbucket.org/rude/love/downloads/). (**Important that it is the 0.10.2 version!**)
+1. Download LÖVE v.0.10.2: https://bitbucket.org/rude/love/downloads/ (**Important that it is the 0.10.2 version!**)
 2. (IF computer == MAC) Add LÖVE directory to PATH: https://love2d.org/wiki/PATH
-3. From the project root directory, start the game by typing `love .` in your terminal
+3. From the project root directory, start the game by typing `love .` in your terminal :)
