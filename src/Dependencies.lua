@@ -40,3 +40,44 @@ require 'src/states/PlayState'
 require 'src/states/MenuState'
 require 'src/states/InfoState'
 require 'src/states/GhostInfoState'
+
+gSounds = {
+    ['synne1'] = love.audio.newSource("sounds/Wergelandsveien7.wav", "static"),
+    ['synne2'] = love.audio.newSource("sounds/Wergelandsveien73.wav", "static"),
+    ['background'] = love.audio.newSource("sounds/hurryup.wav", "stream"),
+    ['monitorPickup'] = love.audio.newSource("sounds/Pickup_Coin.wav", "static"),
+    ['jump'] = love.audio.newSource("sounds/jump.wav"),
+}
+
+gGraphics = {
+    ['menu'] = love.graphics.newImage('graphics/menu.png'),
+    ['logo'] = love.graphics.newImage('graphics/logo.png'),
+    ['background'] = love.graphics.newImage('graphics/background.png'),
+    ['ground'] = love.graphics.newImage('graphics/ground.png'),
+    ['monitor'] = love.graphics.newImage('graphics/airthings.png'),
+    ['obstacles'] = {
+        ['bookcase'] = love.graphics.newImage('graphics/furni2.png'),
+        ['longTable'] = love.graphics.newImage('graphics/furni5.png'),
+        ['diningTable'] = love.graphics.newImage('graphics/furni6.png'),
+        ['lamp'] = love.graphics.newImage('graphics/furni7.png'),
+        ['mirror'] = love.graphics.newImage('graphics/furni8.png'),
+    },
+    ['tile'] = love.graphics.newImage('graphics/tile.png'),
+    ['player'] = {
+        ['left'] = love.graphics.newImage('graphics/player/hero2.png'),
+        ['right'] = love.graphics.newImage('graphics/player/hero1.png'),
+        ['radon_left'] = love.graphics.newImage('graphics/player/hero_radon2.png'),
+        ['radon_right'] = love.graphics.newImage('graphics/player/hero_radon1.png'),
+    },
+    ['ghosts'] = {
+        ['adam'] = love.graphics.newImage('graphics/Radon1.png'),
+        ['bob'] = love.graphics.newImage('graphics/Radon2.png'),
+        ['carl'] = love.graphics.newImage('graphics/Radon3.png'),
+    }
+}
+
+gFonts = {
+    ['big'] = love.graphics.newFont('fonts/font.ttf', 32),
+    ['medium'] = love.graphics.newFont('fonts/font.ttf', 16),
+    ['small'] = love.graphics.newFont('fonts/font.ttf', 8),
+}
