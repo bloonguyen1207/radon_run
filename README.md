@@ -25,3 +25,8 @@ An educational game about indoor air quality
 1. Download LÖVE v.0.10.2: https://bitbucket.org/rude/love/downloads/ (**Important that it is the 0.10.2 version!**)
 2. (IF computer == MAC) Add LÖVE directory to PATH: https://love2d.org/wiki/PATH
 3. From the project root directory, start the game by typing `love .` in your terminal :)
+
+## Make new release:
+1. Add a tag on the format vX.Y.Z
+2. Github workflow builds your new release.
+3. Download and test the new release from github.
