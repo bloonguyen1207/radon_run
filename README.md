@@ -20,6 +20,7 @@ An educational game about indoor air quality
 * More animations (it should look super cool)
 * Introduce health bar for player, it should be reduced as soon as the level is started
 * Different player characters, and different environments (office, basement, schools etc)
+* Port to web using [love.js](https://github.com/TannerRogalsky/love.js) so we can place it on the Airthings website (or wherever on the web)
 
 ## Setup
 1. Download LÖVE v.0.10.2: https://bitbucket.org/rude/love/downloads/ (**Important that it is the 0.10.2 version!**)
